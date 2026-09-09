@@ -156,6 +156,9 @@
     flex-shrink:0;
   }
   .about-text p{margin:0 0 14px; max-width:58ch;}
+  .about-text .edu-list{list-style:none; margin:0 0 14px; padding:0;}
+  .about-text .edu-list li{position:relative; padding-left:1.1em; margin-bottom:5px; max-width:58ch;}
+  .about-text .edu-list li::before{content:"–"; position:absolute; left:0; color:var(--text-muted);}
   .about-text .role{color:var(--secular); font-family:'IBM Plex Mono',monospace; font-size:.82rem; margin-bottom:10px; display:block;}
 
   /* --- journal / news --- */
@@ -331,8 +334,15 @@
             <span class="i18n-en">Dennis Patsiuk is a choirmaster, arranger, composer, and conductor, working with choral, orchestral, and production ensembles worldwide. He currently serves as chorus master for the symphonic orchestra Lords of the Sound, standing in for the principal conductor as needed.</span>
           </p>
           <p>
-            <span class="i18n-ru">Образование: Брестский музыкальный колледж им. Г. Ширмы (2001 г.), Белорусская государственная академия музыки (2007 г.). Автор хоровых, сольных и детских произведений; готовит хоровые ноты и оркестровые партитуры к изданию и исполнению — от клавира до полного оркестрового состава.</span>
-            <span class="i18n-en">Education: Brest G. Shirma Music College (2001), Belarusian State Academy of Music (2007). He composes choral, solo, and children's works, and prepares choral scores and orchestral parts for publication and performance — from piano reduction to full orchestral scoring.</span>
+            <span class="i18n-ru">Образование:</span><span class="i18n-en">Education:</span>
+          </p>
+          <ul class="edu-list">
+            <li><span class="i18n-ru">Брестский музыкальный колледж им. Г. Ширмы (2001 г.)</span><span class="i18n-en">Brest G. Shirma Music College (2001)</span></li>
+            <li><span class="i18n-ru">Белорусская государственная академия музыки (2007 г.)</span><span class="i18n-en">Belarusian State Academy of Music (2007)</span></li>
+          </ul>
+          <p>
+            <span class="i18n-ru">Автор хоровых, сольных и детских произведений; готовит хоровые ноты и оркестровые партитуры к изданию и исполнению — от клавира до полного оркестрового состава.</span>
+            <span class="i18n-en">He composes choral, solo, and children's works, and prepares choral scores and orchestral parts for publication and performance — from piano reduction to full orchestral scoring.</span>
           </p>
         </div>
       </div>
