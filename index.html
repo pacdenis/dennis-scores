@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<!--
+  ЗАМЕТКИ ДЛЯ ДЕНИСА (не отображаются на сайте):
+  Это СТАРТОВАЯ СТРАНИЦА-РАЗВИЛКА. Она должна лежать в одной папке
+  с secular.html и sacred.html — иначе кнопки ниже не сработают.
+  Текст email в подвале — замени на свой.
+-->
+<html lang="ru" data-lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Денис Пацюк — хормейстер, аранжировщик, композитор</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,600;0,700;1,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#221C15;
+    --paper:#F1EAD6;
+    --paper-deep:#E6DBBC;
+    --rule:#C7B990;
+    --text:#2B2419;
+    --text-muted:#79694A;
+    --sacred:#7A2C3B;
+    --sacred-soft:#EEDBDD;
+    --secular:#875318;
+    --secular-soft:#EFE0BE;
+    --paper-rgb: 241,234,214;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    min-height:100vh;
+    background:var(--paper);
+    color:var(--text);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    display:flex;
+    flex-direction:column;
+  }
+  .i18n-en{display:none;}
+  body.lang-en .i18n-ru{display:none;}
+  body.lang-en .i18n-en{display:inline;}
+  a{color:inherit;}
+  .wrap{max-width:920px; margin:0 auto; padding:0 28px; width:100%;}
+
+  .stave{height:14px; margin:0 auto; max-width:920px; padding:0 28px;}
+  .stave::before{
+    content:"";
+    display:block;
+    height:100%;
+    background:
+      repeating-linear-gradient(
+        to bottom,
+        var(--rule) 0px, var(--rule) 1px,
+        transparent 1px, transparent 6px
+      );
+    background-size: 100% 13px;
+    background-repeat:no-repeat;
+    opacity:.9;
+  }
+
+  header{padding:22px 0; border-bottom:1px solid var(--rule);}
+  .nav{max-width:920px; margin:0 auto; padding:0 28px; display:flex; align-items:center; justify-content:space-between;}
+  .wordmark{font-family:'Alegreya', serif; font-weight:700; font-size:1.25rem; letter-spacing:.2px; text-decoration:none; color:var(--ink);}
+  .wordmark small{display:block; font-family:'IBM Plex Sans',sans-serif; font-weight:400; font-size:.68rem; color:var(--text-muted); letter-spacing:.02em; margin-top:2px;}
+  .lang-switch{
+    display:flex; border:1px solid var(--rule); border-radius:3px; overflow:hidden;
+    font-family:'IBM Plex Mono', monospace; font-size:.78rem;
+  }
+  .lang-switch button{
+    background:transparent; border:none; padding:6px 10px; cursor:pointer;
+    color:var(--text-muted); font-family:inherit; font-size:inherit;
+  }
+  .lang-switch button.active{background:var(--ink); color:var(--paper);}
+
+  main{flex:1; display:flex; align-items:center;}
+  .hero{padding:56px 0 40px; text-align:center;}
+  .hero .eyebrow{
+    font-family:'IBM Plex Mono', monospace; font-size:.82rem; color:var(--text-muted);
+    margin-bottom:16px;
+  }
+  .hero h1{
+    font-family:'Alegreya', serif; font-weight:600; color:var(--ink);
+    font-size:clamp(1.9rem, 4vw, 2.7rem); line-height:1.2; margin:0 auto; max-width:20ch;
+  }
+  .hero p.lede{
+    margin:20px auto 0; max-width:48ch; font-size:1.05rem; color:var(--text-muted);
+  }
+
+  .choices{
+    margin-top:48px;
+    display:grid; grid-template-columns:1fr 1fr; gap:1px;
+    background:var(--rule); border:1px solid var(--rule);
+  }
+  .choice{
+    background:var(--paper);
+    padding:44px 32px;
+    text-decoration:none;
+    display:flex; flex-direction:column; align-items:center; text-align:center;
+    transition:background .15s ease;
+  }
+  .choice:hover{background:var(--paper-deep);}
+  .choice .tag{
+    font-family:'IBM Plex Mono', monospace; font-size:.76rem;
+    padding:5px 12px; border-radius:20px; margin-bottom:20px;
+  }
+  .choice.secular .tag{background:var(--secular-soft); color:var(--secular);}
+  .choice.sacred .tag{background:var(--sacred-soft); color:var(--sacred);}
+  .choice h2{
+    font-family:'Alegreya', serif; font-weight:600; font-size:1.5rem; color:var(--ink); margin:0;
+  }
+  .choice p{margin:12px 0 0; color:var(--text-muted); font-size:.94rem; max-width:32ch;}
+  .choice .go{
+    margin-top:22px; font-family:'IBM Plex Mono', monospace; font-size:.82rem;
+  }
+  .choice.secular .go{color:var(--secular);}
+  .choice.sacred .go{color:var(--sacred);}
+
+  footer{padding:26px 0 40px;}
+  footer .wrap{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;}
+  footer p{margin:0; font-size:.8rem; color:var(--text-muted);}
+  footer a{font-size:.8rem; color:var(--text-muted); text-decoration:none; border-bottom:1px solid var(--rule);}
+
+  @media (max-width:640px){
+    .choices{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a class="wordmark" href="#top">
+      Денис Пацюк
+      <small><span class="i18n-ru">Хормейстер · Аранжировщик · Композитор</span><span class="i18n-en">Choirmaster · Arranger · Composer</span></small>
+    </a>
+    <div class="lang-switch">
+      <button type="button" data-lang="ru" class="active">RU</button>
+      <button type="button" data-lang="en">EN</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap">
+    <div class="hero">
+      <div class="eyebrow"><span class="i18n-ru">Готовые партитуры для хоров и оркестров</span><span class="i18n-en">Ready scores for choirs and orchestras</span></div>
+      <h1>
+        <span class="i18n-ru">С каким репертуаром вам нужна помощь?</span>
+        <span class="i18n-en">Which repertoire do you need help with?</span>
+      </h1>
+      <p class="lede">
+        <span class="i18n-ru">Аранжировки, оркестровки и композиция — для концертной сцены или для церковного служения. Выберите направление, чтобы увидеть каталог и обсудить проект.</span>
+        <span class="i18n-en">Arrangements, orchestration, and composition — for the concert stage or for church ministry. Choose a direction to see the catalog and discuss a project.</span>
+      </p>
+    </div>
+
+    <div class="choices">
+      <a class="choice secular" href="secular.html">
+        <span class="tag"><span class="i18n-ru">Светская музыка</span><span class="i18n-en">Secular music</span></span>
+        <h2><span class="i18n-ru">Концерт, событие, продюсерский проект</span><span class="i18n-en">Concert, event, production project</span></h2>
+        <p>
+          <span class="i18n-ru">Каталог готовых аранжировок и оркестровок для хоров, оркестров и продюсерских команд.</span>
+          <span class="i18n-en">A catalog of ready-made arrangements and orchestrations for choirs, orchestras, and production teams.</span>
+        </p>
+        <span class="go"><span class="i18n-ru">Смотреть каталог →</span><span class="i18n-en">Browse catalog →</span></span>
+      </a>
+      <a class="choice sacred" href="sacred.html">
+        <span class="tag"><span class="i18n-ru">Духовная музыка</span><span class="i18n-en">Sacred music</span></span>
+        <h2><span class="i18n-ru">Церковный хор, духовный концерт</span><span class="i18n-en">Church choir, sacred concert</span></h2>
+        <p>
+          <span class="i18n-ru">Каталог готовых произведений для церковных хоров, духовных концертов и богослужений.</span>
+          <span class="i18n-en">A catalog of ready-made works for church choirs, sacred concerts, and worship services.</span>
+        </p>
+        <span class="go"><span class="i18n-ru">Смотреть каталог →</span><span class="i18n-en">Browse catalog →</span></span>
+      </a>
+    </div>
+  </div>
+</main>
+
+<div class="stave"></div>
+
+<footer>
+  <div class="wrap">
+    <p>© <span id="year"></span> Денис Пацюк</p>
+    <a href="mailto:you@example.com">you@example.com</a>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+  var langButtons = document.querySelectorAll('.lang-switch button');
+  langButtons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var lang = btn.getAttribute('data-lang');
+      document.body.classList.toggle('lang-en', lang === 'en');
+      document.documentElement.lang = lang;
+      langButtons.forEach(function(b){ b.classList.toggle('active', b === btn); });
+    });
+  });
+</script>
+
+</body>
+</html>

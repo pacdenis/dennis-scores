@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<!--
+  ЗАМЕТКИ ДЛЯ ДЕНИСА (не отображаются на сайте):
+  Это САЙТ ДЛЯ ДУХОВНОЙ МУЗЫКИ. Парный сайт для светской музыки — secular.html,
+  положите оба файла в одну папку при хостинге, чтобы работала кросс-ссылка
+  в шапке ("Также веду каталог духовной музыки →").
+  1. Каталог — все произведения ниже ПРИМЕРНЫЕ (заглушки). Замените названия,
+     состав, хронометраж и ссылки на реальные. Каждая позиция — блок
+     <li class="work"> … </li> внутри <ul class="work-list">.
+     Скопируйте один блок, отредактируйте текст — структура не изменится.
+     У каждой позиции: data-cat="..." — состав (для фильтра "Состав"),
+     data-tags="..." — один или несколько поводов через пробел (для фильтра
+     "Повод", коды поводов см. в data-filter кнопок ниже по файлу),
+     <span class="version-badge">v1.0</span> — версия партитуры (меняйте
+     при каждой правке). Счётчики рядом с фильтрами считаются сами.
+  2. Кнопка "Купить" — сейчас ведёт на "#". Замените href на ссылку
+     конкретного товара на Gumroad/Payhip.
+  3. Превью аудио — атрибут data-audio="" пустой. Впишите путь/URL к mp3,
+     и кнопка "Прослушать" станет активной автоматически.
+  4. PDF-превью — атрибут data-pdf="" пустой, аналогично.
+  5. В разделе "Контакты" форма уже подключена к адресу Formspree
+     (f/xaeyaoon). Если создашь новую форму на Formspree — обнови адрес
+     в атрибуте action тега <form>. Email нигде в коде не показывается.
+  6. Монограмма "ДП" в разделе "О себе" — замените на фото, если оно есть
+     (просто поставьте <img> вместо div.monogram).
+-->
+<html lang="ru" data-lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Денис Пацюк — духовная музыка для церковных хоров и коллективов</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,600;0,700;1,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#221C15;
+    --paper:#F1EAD6;
+    --paper-deep:#E6DBBC;
+    --rule:#C7B990;
+    --text:#2B2419;
+    --text-muted:#79694A;
+    --sacred:#7A2C3B;
+    --sacred-soft:#EEDBDD;
+    --secular:#875318;
+    --secular-soft:#EFE0BE;
+    --paper-rgb: 241,234,214;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--text);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .i18n-en{display:none;}
+  body.lang-en .i18n-ru{display:none;}
+  body.lang-en .i18n-en{display:inline;}
+  body.lang-en .i18n-en.block{display:block;}
+  h1,h2,h3,.serif{
+    font-family:'Alegreya', serif;
+    font-weight:600;
+    color:var(--ink);
+    margin:0;
+  }
+  a{color:inherit;}
+  .wrap{max-width:920px; margin:0 auto; padding:0 28px;}
+
+  /* --- staff-line divider: a simplified manuscript stave --- */
+  .stave{height:14px; margin:0 auto; max-width:920px; padding:0 28px;}
+  .stave::before{
+    content:"";
+    display:block;
+    height:100%;
+    background:
+      repeating-linear-gradient(
+        to bottom,
+        var(--rule) 0px, var(--rule) 1px,
+        transparent 1px, transparent 6px
+      );
+    background-size: 100% 13px;
+    background-repeat:no-repeat;
+    opacity:.9;
+  }
+
+  /* --- header / nav --- */
+  header{
+    position:sticky; top:0; z-index:20;
+    background:rgba(var(--paper-rgb), .92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--rule);
+  }
+  .nav{
+    max-width:920px; margin:0 auto; padding:16px 28px;
+    display:flex; align-items:center; justify-content:space-between; gap:20px;
+  }
+  .wordmark{font-family:'Alegreya', serif; font-weight:700; font-size:1.25rem; letter-spacing:.2px; text-decoration:none; color:var(--ink);}
+  .wordmark small{display:block; font-family:'IBM Plex Sans',sans-serif; font-weight:400; font-size:.68rem; color:var(--text-muted); letter-spacing:.02em; margin-top:2px;}
+  nav.links{display:flex; align-items:center; gap:26px;}
+  nav.links a{
+    font-size:.92rem; text-decoration:none; color:var(--text);
+    border-bottom:1px solid transparent; padding-bottom:2px;
+    transition:border-color .15s ease;
+  }
+  nav.links a:hover{border-color:var(--secular);}
+  #navToggle{display:none;}
+  .lang-switch{
+    display:flex; border:1px solid var(--rule); border-radius:3px; overflow:hidden;
+    font-family:'IBM Plex Mono', monospace; font-size:.78rem;
+  }
+  .lang-switch button{
+    background:transparent; border:none; padding:6px 10px; cursor:pointer;
+    color:var(--text-muted); font-family:inherit; font-size:inherit;
+  }
+  .lang-switch button.active{background:var(--ink); color:var(--paper);}
+  .cross-link{border-top:1px solid var(--rule); background:rgba(var(--paper-rgb),.55);}
+  .cross-link .wrap{padding:7px 28px;}
+  .cross-link a{font-family:'IBM Plex Mono',monospace; font-size:.75rem; color:var(--sacred); text-decoration:none;}
+  .cross-link a:hover{text-decoration:underline;}
+
+  /* --- hero --- */
+  .hero{padding:76px 0 56px;}
+  .hero .eyebrow{
+    font-family:'IBM Plex Mono', monospace; font-size:.82rem; color:var(--secular);
+    margin-bottom:18px;
+  }
+  .hero h1{font-size:clamp(2.1rem, 4.4vw, 3.3rem); line-height:1.14; max-width:15ch;}
+  .hero p.lede{
+    margin-top:22px; max-width:52ch; font-size:1.08rem; color:var(--text-muted);
+  }
+  .hero .actions{margin-top:32px; display:flex; gap:16px; flex-wrap:wrap;}
+  .btn{
+    display:inline-block; padding:11px 22px; text-decoration:none;
+    font-family:'IBM Plex Sans',sans-serif; font-size:.92rem; font-weight:500;
+    border-radius:2px; border:1px solid var(--ink);
+  }
+  .btn.primary{background:var(--ink); color:var(--paper);}
+  .btn.ghost{background:transparent; color:var(--ink);}
+  .btn[disabled]{opacity:.5; cursor:not-allowed;}
+
+  section{padding:64px 0;}
+  .section-head{margin-bottom:36px; max-width:60ch;}
+  .section-head h2{font-size:1.9rem;}
+  .section-head p{color:var(--text-muted); margin-top:10px;}
+
+  /* --- about --- */
+  .about-grid{display:grid; grid-template-columns:auto 1fr; gap:40px; align-items:start;}
+  .monogram{
+    width:112px; height:112px; border-radius:50%;
+    background:var(--ink); color:var(--paper);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Alegreya', serif; font-size:2rem; font-weight:600;
+    flex-shrink:0;
+  }
+  .about-text p{margin:0 0 14px; max-width:58ch;}
+  .about-text .role{color:var(--secular); font-family:'IBM Plex Mono',monospace; font-size:.82rem; margin-bottom:10px; display:block;}
+
+  /* --- journal / news --- */
+  ul.journal-list{list-style:none; margin:0; padding:0;}
+  li.journal-entry{padding:22px 0; border-bottom:1px solid var(--rule);}
+  li.journal-entry:first-child{border-top:1px solid var(--rule);}
+  .journal-date{font-family:'IBM Plex Mono', monospace; font-size:.76rem; color:var(--secular);}
+  .journal-title{font-family:'Alegreya', serif; font-size:1.18rem; font-weight:600; color:var(--ink); margin-top:5px;}
+  .journal-text{margin-top:8px; color:var(--text); font-size:.95rem; max-width:60ch;}
+  .journal-demo{margin-top:12px;}
+
+  /* --- catalog --- */
+  .catalog-tabs{display:flex; gap:10px; margin-bottom:22px; flex-wrap:wrap;}
+  .tab{
+    font-family:'IBM Plex Sans',sans-serif; font-size:.92rem; font-weight:500;
+    padding:9px 18px; border-radius:20px; border:1px solid var(--rule);
+    background:transparent; cursor:pointer; color:var(--text-muted);
+  }
+  .tab[data-section="secular"].active{background:var(--secular-soft); border-color:var(--secular); color:var(--secular);}
+  .tab[data-section="sacred"].active{background:var(--sacred-soft); border-color:var(--sacred); color:var(--sacred);}
+
+  .filter-label{font-family:'IBM Plex Mono',monospace; font-size:.76rem; color:var(--text-muted); margin:0 0 8px;}
+  .filters{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:26px;}
+  .chip-count{opacity:.7;}
+  .chip{
+    font-family:'IBM Plex Mono',monospace; font-size:.74rem;
+    padding:5px 11px; border:1px solid var(--rule); border-radius:2px;
+    background:transparent; color:var(--text-muted); cursor:pointer;
+  }
+  .chip.active{background:var(--ink); color:var(--paper); border-color:var(--ink);}
+
+  .catalog-section{display:none;}
+  .catalog-section.active{display:block;}
+
+  ul.work-list{list-style:none; margin:0; padding:0;}
+  li.work{
+    display:grid;
+    grid-template-columns:2.6rem 1fr auto;
+    gap:18px;
+    align-items:center;
+    padding:18px 0;
+    border-bottom:1px solid var(--rule);
+  }
+  li.work:first-child{border-top:1px solid var(--rule);}
+  li.work.hidden-by-filter{display:none;}
+  .work-no{font-family:'IBM Plex Mono',monospace; font-size:.78rem; color:var(--text-muted);}
+  .work-title{font-family:'Alegreya',serif; font-size:1.18rem; font-weight:600; color:var(--ink);}
+  .work-meta{
+    margin-top:5px; display:flex; gap:14px; flex-wrap:wrap;
+    font-family:'IBM Plex Mono',monospace; font-size:.76rem; color:var(--text-muted);
+  }
+  .work-actions{display:flex; gap:8px; align-items:center; justify-self:end;}
+  .icon-btn{
+    font-family:'IBM Plex Sans',sans-serif; font-size:.82rem;
+    padding:8px 14px; border-radius:2px; border:1px solid var(--rule);
+    background:transparent; color:var(--text); cursor:pointer; text-decoration:none;
+    white-space:nowrap;
+  }
+  .icon-btn[disabled]{opacity:.45; cursor:not-allowed;}
+  .icon-btn.buy{border-color:var(--ink); background:var(--ink); color:var(--paper);}
+  audio.preview{display:none; margin-top:10px; width:100%;}
+  audio.preview.shown{display:block;}
+
+  /* --- services --- */
+  .services-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--rule); border:1px solid var(--rule);}
+  .service{background:var(--paper); padding:28px 24px;}
+  .service .num{font-family:'IBM Plex Mono',monospace; font-size:.78rem; color:var(--secular); display:block; margin-bottom:14px;}
+  .service h3{font-size:1.2rem; margin-bottom:10px;}
+  .service p{color:var(--text-muted); font-size:.94rem; margin:0;}
+
+  /* --- contact --- */
+  .contact-box{
+    background:var(--paper-deep); padding:40px 36px; border-radius:2px;
+  }
+  .contact-box h2{font-size:1.6rem; max-width:24ch;}
+  .contact-box .sub{margin-top:10px; color:var(--text-muted); font-size:.94rem; max-width:46ch;}
+  .contact-form{display:flex; flex-direction:column; gap:14px; margin-top:26px; max-width:440px;}
+  .contact-form input, .contact-form textarea{
+    font-family:'IBM Plex Sans',sans-serif; font-size:.95rem;
+    padding:12px 14px; border:1px solid var(--rule); border-radius:2px;
+    background:var(--paper); color:var(--text); width:100%;
+  }
+  .contact-form textarea{min-height:120px; resize:vertical;}
+  .contact-form input:focus, .contact-form textarea:focus{outline:none; border-color:var(--ink);}
+  .contact-form button{align-self:flex-start; cursor:pointer;}
+  .form-message{
+    margin-top:18px; padding:14px 18px; max-width:440px;
+    border-radius:2px; border:1px solid var(--rule);
+    background:var(--paper); font-size:.92rem;
+  }
+  .form-message.success{border-color:var(--ink); color:var(--ink);}
+  .form-message.error{border-color:var(--sacred); color:var(--sacred);}
+  .contact-form .hp{position:absolute; left:-9999px; opacity:0; pointer-events:none;}
+  .contact-note{margin-top:14px; font-size:.78rem; color:var(--text-muted);}
+
+  footer{padding:30px 0 50px;}
+  footer .wrap{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;}
+  footer p{margin:0; font-size:.8rem; color:var(--text-muted);}
+
+  @media (max-width:640px){
+    .nav{flex-wrap:wrap;}
+    nav.links{
+      order:3; width:100%; display:none; flex-direction:column; gap:14px;
+      padding-top:14px; border-top:1px solid var(--rule); margin-top:10px;
+    }
+    nav.links.open{display:flex;}
+    #navToggle{display:inline-block; background:none; border:1px solid var(--rule); border-radius:3px; padding:6px 10px; font-family:'IBM Plex Mono',monospace; cursor:pointer;}
+    .about-grid{grid-template-columns:1fr;}
+    .services-grid{grid-template-columns:1fr;}
+    li.work{grid-template-columns:1fr; row-gap:10px;}
+    .work-actions{justify-self:start;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a class="wordmark" href="index.html">
+      Денис Пацюк
+      <small><span class="i18n-ru">Хормейстер · Аранжировщик · Композитор</span><span class="i18n-en">Choirmaster · Arranger · Composer</span></small>
+    </a>
+    <button id="navToggle" aria-label="Меню">☰</button>
+    <nav class="links" id="navLinks">
+      <a href="#about"><span class="i18n-ru">О себе</span><span class="i18n-en">About</span></a>
+      <a href="#journal"><span class="i18n-ru">Мастерская</span><span class="i18n-en">Studio log</span></a>
+      <a href="#catalog"><span class="i18n-ru">Каталог</span><span class="i18n-en">Catalog</span></a>
+      <a href="#services"><span class="i18n-ru">Услуги</span><span class="i18n-en">Services</span></a>
+      <a href="#contact"><span class="i18n-ru">Контакты</span><span class="i18n-en">Contact</span></a>
+    </nav>
+    <div class="lang-switch">
+      <button type="button" data-lang="ru" class="active">RU</button>
+      <button type="button" data-lang="en">EN</button>
+    </div>
+  </div>
+  <div class="cross-link">
+    <div class="wrap">
+      <a href="secular.html"><span class="i18n-ru">Также веду каталог светской музыки →</span><span class="i18n-en">I also run a secular-music catalog →</span></a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap">
+      <div class="eyebrow"><span class="i18n-ru">Партитуры для церковных хоров и духовных концертов</span><span class="i18n-en">Scores for church choirs and sacred concerts</span></div>
+      <h1>
+        <span class="i18n-ru">Духовная музыка, готовая к вашему служению</span>
+        <span class="i18n-en">Sacred music, ready for your ministry</span>
+      </h1>
+      <p class="lede">
+        <span class="i18n-ru">Каталог готовых хоровых и оркестровых произведений для церковных хоров, духовных концертов и богослужений. Индивидуальные заказы на аранжировку, оркестровку и композицию выполняются отдельно.</span>
+        <span class="i18n-en">A catalog of ready-made choral and orchestral works for church choirs, sacred concerts, and worship services. Custom arranging, orchestration, and composition commissions are also available.</span>
+      </p>
+      <div class="actions">
+        <a class="btn primary" href="#catalog"><span class="i18n-ru">Смотреть каталог</span><span class="i18n-en">Browse catalog</span></a>
+        <a class="btn ghost" href="#contact"><span class="i18n-ru">Обсудить заказ</span><span class="i18n-en">Discuss a commission</span></a>
+      </div>
+    </div>
+  </section>
+
+  <div class="stave"></div>
+
+  <section id="about">
+    <div class="wrap">
+      <div class="about-grid">
+        <div class="monogram">ДП</div>
+        <div class="about-text">
+          <span class="role"><span class="i18n-ru">О себе</span><span class="i18n-en">About</span></span>
+          <p>
+            <span class="i18n-ru">Денис Пацюк — хормейстер, аранжировщик и композитор, дирижёр, работает с хоровыми, оркестровыми и продюсерскими коллективами по всему миру. На данный момент является хормейстером симфонического оркестра Lords of the Sound, где по необходимости замещает главного дирижёра.</span>
+            <span class="i18n-en">Dennis Patsiuk is a choirmaster, arranger, composer, and conductor, working with choral, orchestral, and production ensembles worldwide. He currently serves as chorus master for the symphonic orchestra Lords of the Sound, standing in for the principal conductor as needed.</span>
+          </p>
+          <p>
+            <span class="i18n-ru">Образование: Брестский музыкальный колледж им. Г. Ширмы (2001 г.), Белорусская государственная академия музыки (2007 г.). Автор хоровых, сольных и детских произведений; готовит хоровые ноты и оркестровые партитуры к изданию и исполнению — от клавира до полного оркестрового состава.</span>
+            <span class="i18n-en">Education: Brest G. Shirma Music College (2001), Belarusian State Academy of Music (2007). He composes choral, solo, and children's works, and prepares choral scores and orchestral parts for publication and performance — from piano reduction to full orchestral scoring.</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="stave"></div>
+
+  <section id="journal">
+    <div class="wrap">
+      <div class="section-head">
+        <h2><span class="i18n-ru">Мастерская</span><span class="i18n-en">Studio log</span></h2>
+        <p>
+          <span class="i18n-ru">Коротко о том, над чем сейчас работаю и что недавно закончил — с демо, где это уместно.</span>
+          <span class="i18n-en">Short notes on what I'm currently working on and what's recently finished — with a demo where relevant.</span>
+        </p>
+      </div>
+
+      <!--
+        ЗАМЕТКА ДЛЯ ДЕНИСА: добавляй новую запись сверху списка (самая свежая — первая).
+        Скопируй один <li class="journal-entry"> блок, поменяй дату/заголовок/текст.
+        Если демо нет — просто удали блок <div class="journal-demo">…</div>.
+      -->
+      <ul class="journal-list">
+
+        <li class="journal-entry">
+          <div class="journal-date"><span class="i18n-ru">Сентябрь 2026</span><span class="i18n-en">September 2026</span></div>
+          <div class="journal-title"><span class="i18n-ru">Оркестровка кантаты для клиента из Германии</span><span class="i18n-en">Orchestration of a cantata for a client in Germany</span></div>
+          <div class="journal-text">
+            <span class="i18n-ru">Завершил партитуру для хора и камерного оркестра — премьера в начале следующего сезона.</span>
+            <span class="i18n-en">Finished the score for choir and chamber orchestra — premiering early next season.</span>
+          </div>
+          <div class="journal-demo">
+            <button class="icon-btn play" data-audio="">▶ <span class="i18n-ru">Демо</span><span class="i18n-en">Demo</span></button>
+            <audio class="preview" controls data-audio=""></audio>
+          </div>
+        </li>
+
+        <li class="journal-entry">
+          <div class="journal-date"><span class="i18n-ru">Август 2026</span><span class="i18n-en">August 2026</span></div>
+          <div class="journal-title"><span class="i18n-ru">Новая аранжировка для детского хора</span><span class="i18n-en">New arrangement for a children's choir</span></div>
+          <div class="journal-text">
+            <span class="i18n-ru">Готова лёгкая версия для детского состава — добавлю в каталог в ближайшее время.</span>
+            <span class="i18n-en">An easy-level version for a children's ensemble is ready — will be added to the catalog soon.</span>
+          </div>
+        </li>
+
+      </ul>
+    </div>
+  </section>
+
+  <div class="stave"></div>
+
+  <section id="catalog">
+    <div class="wrap">
+      <div class="section-head">
+        <h2><span class="i18n-ru">Каталог</span><span class="i18n-en">Catalog</span></h2>
+        <p>
+          <span class="i18n-ru">Готовые произведения для церковных хоров и духовных концертов. У каждой позиции — состав исполнителей, хронометраж, аудио-превью и PDF первой страницы.</span>
+          <span class="i18n-en">Ready-made works for church choirs and sacred concerts. Every entry lists the forces, duration, an audio preview, and a first-page PDF.</span>
+        </p>
+      </div>
+
+<div class="filter-label"><span class="i18n-ru">Состав</span><span class="i18n-en">Forces</span></div>
+      <div class="filters type-filters">
+        <button class="chip active" data-filter="all">
+          <span class="i18n-ru">Все</span><span class="i18n-en">All</span><span class="chip-count"></span>
+        </button>
+        <button class="chip" data-filter="acappella"><span class="i18n-ru">A cappella</span><span class="i18n-en">A cappella</span><span class="chip-count"></span></button>
+        <button class="chip" data-filter="piano"><span class="i18n-ru">Хор + ф-но/орган</span><span class="i18n-en">Choir + piano/organ</span><span class="chip-count"></span></button>
+        <button class="chip" data-filter="orchestra"><span class="i18n-ru">Хор + оркестр</span><span class="i18n-en">Choir + orchestra</span><span class="chip-count"></span></button>
+        <button class="chip" data-filter="orchestral"><span class="i18n-ru">Оркестровые</span><span class="i18n-en">Orchestral</span><span class="chip-count"></span></button>
+        <button class="chip" data-filter="solo"><span class="i18n-ru">Вокал соло</span><span class="i18n-en">Solo vocal</span><span class="chip-count"></span></button>
+        <button class="chip" data-filter="children"><span class="i18n-ru">Детский репертуар</span><span class="i18n-en">Children's</span><span class="chip-count"></span></button>
+      </div>
+
+      <div class="filter-label"><span class="i18n-ru">Повод</span><span class="i18n-en">Occasion</span></div>
+      <div class="filters tag-filters">
+        <button class="chip active" data-filter="all">
+          <span class="i18n-ru">Все</span><span class="i18n-en">All</span><span class="chip-count"></span>
+        </button>
+        <button class="chip" data-filter="rozhdestvo"><span class="i18n-ru">Рождество</span><span class="i18n-en">Christmas</span><span class="chip-count"></span></button>
+        <button class="chip" data-filter="pasha"><span class="i18n-ru">Пасха</span><span class="i18n-en">Easter</span><span class="chip-count"></span></button>
+        <button class="chip" data-filter="svadebnaya"><span class="i18n-ru">Свадебная</span><span class="i18n-en">Wedding</span><span class="chip-count"></span></button>
+        <button class="chip" data-filter="uteshenie"><span class="i18n-ru">Утешение</span><span class="i18n-en">Comfort</span><span class="chip-count"></span></button>
+        <button class="chip" data-filter="hvala"><span class="i18n-ru">Хвала</span><span class="i18n-en">Praise</span><span class="chip-count"></span></button>
+      </div>
+
+      <!-- ===================== ДУХОВНЫЕ ===================== -->
+      <div class="catalog-section active" data-section="sacred">
+        <ul class="work-list">
+
+          <li class="work" data-cat="acappella" data-tags="hvala">
+            <span class="work-no">No. 001</span>
+            <div>
+              <div class="work-title"><span class="i18n-ru">Тебе поём</span><span class="i18n-en">Tebe Poyom</span></div>
+              <div class="work-meta">
+                <span>SATB</span><span>3:15</span>
+                <span class="i18n-ru">Средний уровень</span><span class="i18n-en">Intermediate</span><span class="version-badge">v1.0</span>
+              </div>
+              <audio class="preview" controls data-audio=""></audio>
+            </div>
+            <div class="work-actions">
+              <button class="icon-btn play" data-audio="">▶ <span class="i18n-ru">Прослушать</span><span class="i18n-en">Preview</span></button>
+              <a class="icon-btn pdf" href="#" data-pdf="">PDF</a>
+              <a class="icon-btn buy" href="#"><span class="i18n-ru">Купить</span><span class="i18n-en">Buy</span></a>
+            </div>
+          </li>
+
+          <li class="work" data-cat="piano" data-tags="uteshenie">
+            <span class="work-no">No. 002</span>
+            <div>
+              <div class="work-title"><span class="i18n-ru">Свете тихий</span><span class="i18n-en">Svete Tikhiy</span></div>
+              <div class="work-meta">
+                <span><span class="i18n-ru">Хор + орган</span><span class="i18n-en">Choir + organ</span></span><span>4:00</span>
+                <span class="i18n-ru">Продвинутый уровень</span><span class="i18n-en">Advanced</span><span class="version-badge">v1.0</span>
+              </div>
+              <audio class="preview" controls data-audio=""></audio>
+            </div>
+            <div class="work-actions">
+              <button class="icon-btn play" data-audio="">▶ <span class="i18n-ru">Прослушать</span><span class="i18n-en">Preview</span></button>
+              <a class="icon-btn pdf" href="#" data-pdf="">PDF</a>
+              <a class="icon-btn buy" href="#"><span class="i18n-ru">Купить</span><span class="i18n-en">Buy</span></a>
+            </div>
+          </li>
+
+          <li class="work" data-cat="orchestra" data-tags="pasha">
+            <span class="work-no">No. 003</span>
+            <div>
+              <div class="work-title"><span class="i18n-ru">Пасхальная кантата</span><span class="i18n-en">Easter Cantata</span></div>
+              <div class="work-meta">
+                <span><span class="i18n-ru">Хор + оркестр</span><span class="i18n-en">Choir + orchestra</span></span><span>11:30</span>
+                <span class="i18n-ru">Продвинутый уровень</span><span class="i18n-en">Advanced</span><span class="version-badge">v1.0</span>
+              </div>
+              <audio class="preview" controls data-audio=""></audio>
+            </div>
+            <div class="work-actions">
+              <button class="icon-btn play" data-audio="">▶ <span class="i18n-ru">Прослушать</span><span class="i18n-en">Preview</span></button>
+              <a class="icon-btn pdf" href="#" data-pdf="">PDF</a>
+              <a class="icon-btn buy" href="#"><span class="i18n-ru">Купить</span><span class="i18n-en">Buy</span></a>
+            </div>
+          </li>
+
+          <li class="work" data-cat="children" data-tags="rozhdestvo">
+            <span class="work-no">No. 004</span>
+            <div>
+              <div class="work-title"><span class="i18n-ru">Колыбельная ангела</span><span class="i18n-en">Angel's Lullaby</span></div>
+              <div class="work-meta">
+                <span><span class="i18n-ru">Детский хор + ф-но</span><span class="i18n-en">Children's choir + piano</span></span><span>2:45</span>
+                <span class="i18n-ru">Лёгкий уровень</span><span class="i18n-en">Easy</span><span class="version-badge">v1.0</span>
+              </div>
+              <audio class="preview" controls data-audio=""></audio>
+            </div>
+            <div class="work-actions">
+              <button class="icon-btn play" data-audio="">▶ <span class="i18n-ru">Прослушать</span><span class="i18n-en">Preview</span></button>
+              <a class="icon-btn pdf" href="#" data-pdf="">PDF</a>
+              <a class="icon-btn buy" href="#"><span class="i18n-ru">Купить</span><span class="i18n-en">Buy</span></a>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="stave"></div>
+
+  <section id="services">
+    <div class="wrap">
+      <div class="section-head">
+        <h2><span class="i18n-ru">Услуги на заказ</span><span class="i18n-en">Custom commissions</span></h2>
+        <p>
+          <span class="i18n-ru">Помимо готового каталога, беру индивидуальные заказы для оркестров, продюсеров и издателей.</span>
+          <span class="i18n-en">Beyond the ready catalog, I take individual commissions for orchestras, producers, and publishers.</span>
+        </p>
+      </div>
+      <div class="services-grid">
+        <div class="service">
+          <span class="num">01</span>
+          <h3><span class="i18n-ru">Аранжировка</span><span class="i18n-en">Arrangement</span></h3>
+          <p><span class="i18n-ru">Переложение существующего произведения для нового состава — от соло до полного хора и оркестра.</span><span class="i18n-en">Reworking an existing piece for a new ensemble — from solo voice to full choir and orchestra.</span></p>
+        </div>
+        <div class="service">
+          <span class="num">02</span>
+          <h3><span class="i18n-ru">Оркестровка</span><span class="i18n-en">Orchestration</span></h3>
+          <p><span class="i18n-ru">Полная оркестровая партитура по клавиру или лид-шиту, с учётом состава и уровня коллектива.</span><span class="i18n-en">A full orchestral score from a piano reduction or lead sheet, matched to the ensemble's size and level.</span></p>
+        </div>
+        <div class="service">
+          <span class="num">03</span>
+          <h3><span class="i18n-ru">Композиция на заказ</span><span class="i18n-en">Original composition</span></h3>
+          <p><span class="i18n-ru">Оригинальное произведение под конкретное событие, состав или текст.</span><span class="i18n-en">An original piece written for a specific event, ensemble, or text.</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="stave"></div>
+
+  <section id="contact">
+    <div class="wrap">
+      <div class="contact-box">
+        <h2><span class="i18n-ru">Обсудим ваш проект?</span><span class="i18n-en">Let's discuss your project</span></h2>
+        <p class="sub">
+          <span class="i18n-ru">Заполните форму — сообщение придёт мне напрямую, без публикации email на странице.</span>
+          <span class="i18n-en">Fill in the form — the message goes straight to me, with no email address published on the page.</span>
+        </p>
+        <!--
+          ЗАМЕТКА ДЛЯ ДЕНИСА: форма уже подключена к твоему адресу Formspree (f/xaeyaoon)
+          и отправляется через AJAX (без перезагрузки страницы). Если захочешь создать
+          новую форму на formspree.io — замени значение в атрибуте action тега <form>
+          на новый адрес вида https://formspree.io/f/xxxxxxxx.
+        -->
+        <form class="contact-form" id="contactForm" action="https://formspree.io/f/xaeyaoon" method="POST">
+          <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off">
+          <input type="text" name="name" data-ph-ru="Ваше имя" data-ph-en="Your name" required>
+          <input type="email" name="email" data-ph-ru="Ваш email" data-ph-en="Your email" required>
+          <textarea name="message" data-ph-ru="Расскажите о проекте" data-ph-en="Tell me about your project" required></textarea>
+          <button type="submit" class="btn primary" id="contactSubmit"><span class="i18n-ru">Отправить</span><span class="i18n-en">Send</span></button>
+        </form>
+        <div class="form-message success" id="formSuccess" hidden>
+          <span class="i18n-ru">Спасибо! Сообщение отправлено — отвечу как можно скорее.</span>
+          <span class="i18n-en">Thank you! Your message has been sent — I'll reply as soon as I can.</span>
+        </div>
+        <div class="form-message error" id="formError" hidden>
+          <span class="i18n-ru">Что-то пошло не так. Попробуйте ещё раз чуть позже.</span>
+          <span class="i18n-en">Something went wrong. Please try again in a moment.</span>
+        </div>
+        <p class="contact-note">
+          <span class="i18n-ru">Форма подключается через Formspree — бесплатный сервис пересылки писем.</span>
+          <span class="i18n-en">Powered by Formspree — a free form-to-email relay service.</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>© <span id="year"></span> Денис Пацюк</p>
+    <p><span class="i18n-ru">Поль­ша</span><span class="i18n-en">Poland</span></p>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // --- language switch ---
+  var langButtons = document.querySelectorAll('.lang-switch button');
+  var phFields = document.querySelectorAll('.contact-form [data-ph-ru]');
+  function applyPlaceholders(lang){
+    phFields.forEach(function(f){
+      f.placeholder = f.getAttribute(lang === 'en' ? 'data-ph-en' : 'data-ph-ru');
+    });
+  }
+  applyPlaceholders('ru');
+
+  // --- contact form: AJAX submit via fetch, no page reload ---
+  var contactForm = document.getElementById('contactForm');
+  if(contactForm){
+    var successBox = document.getElementById('formSuccess');
+    var errorBox = document.getElementById('formError');
+    var submitBtn = document.getElementById('contactSubmit');
+    contactForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      errorBox.hidden = true;
+      successBox.hidden = true;
+      submitBtn.disabled = true;
+      fetch(contactForm.action, {
+        method: 'POST',
+        body: new FormData(contactForm),
+        headers: { 'Accept': 'application/json' }
+      }).then(function(response){
+        if(response.ok){
+          contactForm.hidden = true;
+          successBox.hidden = false;
+        } else {
+          errorBox.hidden = false;
+          submitBtn.disabled = false;
+        }
+      }).catch(function(){
+        errorBox.hidden = false;
+        submitBtn.disabled = false;
+      });
+    });
+  }
+  langButtons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var lang = btn.getAttribute('data-lang');
+      document.body.classList.toggle('lang-en', lang === 'en');
+      document.documentElement.lang = lang;
+      langButtons.forEach(function(b){ b.classList.toggle('active', b === btn); });
+      applyPlaceholders(lang);
+    });
+  });
+
+  // --- mobile nav ---
+  document.getElementById('navToggle').addEventListener('click', function(){
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+
+  // --- catalog: two independent filter rows (Состав / Повод) combined with AND ---
+  var allWorks = document.querySelectorAll('li.work');
+  var typeFilter = 'all';
+  var tagFilter = 'all';
+
+  function applyFilters(){
+    allWorks.forEach(function(li){
+      var cat = li.getAttribute('data-cat');
+      var tags = (li.getAttribute('data-tags') || '').split(' ');
+      var typeOk = (typeFilter === 'all' || cat === typeFilter);
+      var tagOk = (tagFilter === 'all' || tags.indexOf(tagFilter) !== -1);
+      li.classList.toggle('hidden-by-filter', !(typeOk && tagOk));
+    });
+  }
+
+  function updateChipCounts(){
+    document.querySelectorAll('.type-filters .chip').forEach(function(chip){
+      var f = chip.getAttribute('data-filter');
+      var n = (f === 'all') ? allWorks.length
+        : document.querySelectorAll('li.work[data-cat="' + f + '"]').length;
+      var el = chip.querySelector('.chip-count');
+      if(el) el.textContent = ' (' + n + ')';
+    });
+    document.querySelectorAll('.tag-filters .chip').forEach(function(chip){
+      var f = chip.getAttribute('data-filter');
+      var n = 0;
+      if(f === 'all'){
+        n = allWorks.length;
+      } else {
+        allWorks.forEach(function(li){
+          var tags = (li.getAttribute('data-tags') || '').split(' ');
+          if(tags.indexOf(f) !== -1) n++;
+        });
+      }
+      var el = chip.querySelector('.chip-count');
+      if(el) el.textContent = ' (' + n + ')';
+    });
+  }
+  updateChipCounts();
+
+  document.querySelectorAll('.type-filters .chip').forEach(function(chip){
+    chip.addEventListener('click', function(){
+      document.querySelectorAll('.type-filters .chip').forEach(function(c){ c.classList.toggle('active', c === chip); });
+      typeFilter = chip.getAttribute('data-filter');
+      applyFilters();
+    });
+  });
+  document.querySelectorAll('.tag-filters .chip').forEach(function(chip){
+    chip.addEventListener('click', function(){
+      document.querySelectorAll('.tag-filters .chip').forEach(function(c){ c.classList.toggle('active', c === chip); });
+      tagFilter = chip.getAttribute('data-filter');
+      applyFilters();
+    });
+  });
+
+  // --- audio preview toggle ---
+  document.querySelectorAll('.icon-btn.play').forEach(function(btn){
+    var src = btn.getAttribute('data-audio');
+    if(!src){ btn.disabled = true; btn.title = 'Пример — добавьте mp3 в data-audio'; return; }
+    btn.addEventListener('click', function(){
+      var audio = btn.closest('li').querySelector('audio.preview');
+      audio.src = src;
+      audio.classList.add('shown');
+      audio.play();
+    });
+  });
+
+  // --- PDF preview links: disable placeholders ---
+  document.querySelectorAll('.icon-btn.pdf').forEach(function(a){
+    var pdf = a.getAttribute('data-pdf');
+    if(!pdf){
+      a.addEventListener('click', function(e){ e.preventDefault(); });
+      a.style.opacity = '.45';
+      a.title = 'Пример — добавьте ссылку в data-pdf';
+    } else {
+      a.href = pdf;
+    }
+  });
+</script>
+
+</body>
+</html>
