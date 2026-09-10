@@ -1,0 +1,112 @@
+  :root{
+    --ink:#221C15;
+    --paper:#F1EAD6;
+    --paper-deep:#E6DBBC;
+    --rule:#C7B990;
+    --text:#2B2419;
+    --text-muted:#79694A;
+    --sacred:#7A2C3B;
+    --sacred-soft:#EEDBDD;
+    --secular:#875318;
+    --secular-soft:#EFE0BE;
+    --paper-rgb: 241,234,214;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    min-height:100vh;
+    background:var(--paper);
+    color:var(--text);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    display:flex;
+    flex-direction:column;
+  }
+  .i18n-en{display:none;}
+  body.lang-en .i18n-ru{display:none;}
+  body.lang-en .i18n-en{display:inline;}
+  a{color:inherit;}
+  .wrap{max-width:920px; margin:0 auto; padding:0 28px; width:100%;}
+
+  .stave{height:14px; margin:0 auto; max-width:920px; padding:0 28px;}
+  .stave::before{
+    content:"";
+    display:block;
+    height:100%;
+    background:
+      repeating-linear-gradient(
+        to bottom,
+        var(--rule) 0px, var(--rule) 1px,
+        transparent 1px, transparent 6px
+      );
+    background-size: 100% 13px;
+    background-repeat:no-repeat;
+    opacity:.9;
+  }
+
+  header{padding:22px 0; border-bottom:1px solid var(--rule);}
+  .nav{max-width:920px; margin:0 auto; padding:0 28px; display:flex; align-items:center; justify-content:space-between;}
+  .wordmark{font-family:'Alegreya', serif; font-weight:700; font-size:1.25rem; letter-spacing:.2px; text-decoration:none; color:var(--ink);}
+  .wordmark small{display:block; font-family:'IBM Plex Sans',sans-serif; font-weight:400; font-size:.68rem; color:var(--text-muted); letter-spacing:.02em; margin-top:2px;}
+  .lang-switch{
+    display:flex; border:1px solid var(--rule); border-radius:3px; overflow:hidden;
+    font-family:'IBM Plex Mono', monospace; font-size:.78rem;
+  }
+  .lang-switch button{
+    background:transparent; border:none; padding:6px 10px; cursor:pointer;
+    color:var(--text-muted); font-family:inherit; font-size:inherit;
+  }
+  .lang-switch button.active{background:var(--ink); color:var(--paper);}
+
+  main{flex:1; display:flex; align-items:center;}
+  .hero{padding:56px 0 40px; text-align:center;}
+  .hero .eyebrow{
+    font-family:'IBM Plex Mono', monospace; font-size:.82rem; color:var(--text-muted);
+    margin-bottom:16px;
+  }
+  .hero h1{
+    font-family:'Alegreya', serif; font-weight:600; color:var(--ink);
+    font-size:clamp(1.9rem, 4vw, 2.7rem); line-height:1.2; margin:0 auto; max-width:20ch;
+  }
+  .hero p.lede{
+    margin:20px auto 0; max-width:48ch; font-size:1.05rem; color:var(--text-muted);
+  }
+
+  .choices{
+    margin-top:48px;
+    display:grid; grid-template-columns:1fr 1fr; gap:1px;
+    background:var(--rule); border:1px solid var(--rule);
+  }
+  .choice{
+    background:var(--paper);
+    padding:44px 32px;
+    text-decoration:none;
+    display:flex; flex-direction:column; align-items:center; text-align:center;
+    transition:background .15s ease;
+  }
+  .choice:hover{background:var(--paper-deep);}
+  .choice .tag{
+    font-family:'IBM Plex Mono', monospace; font-size:.76rem;
+    padding:5px 12px; border-radius:20px; margin-bottom:20px;
+  }
+  .choice.secular .tag{background:var(--secular-soft); color:var(--secular);}
+  .choice.sacred .tag{background:var(--sacred-soft); color:var(--sacred);}
+  .choice h2{
+    font-family:'Alegreya', serif; font-weight:600; font-size:1.5rem; color:var(--ink); margin:0;
+  }
+  .choice p{margin:12px 0 0; color:var(--text-muted); font-size:.94rem; max-width:32ch;}
+  .choice .go{
+    margin-top:22px; font-family:'IBM Plex Mono', monospace; font-size:.82rem;
+  }
+  .choice.secular .go{color:var(--secular);}
+  .choice.sacred .go{color:var(--sacred);}
+
+  footer{padding:26px 0 40px;}
+  footer .wrap{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;}
+  footer p{margin:0; font-size:.8rem; color:var(--text-muted);}
+  footer a{font-size:.8rem; color:var(--text-muted); text-decoration:none; border-bottom:1px solid var(--rule);}
+
+  @media (max-width:640px){
+    .choices{grid-template-columns:1fr;}
+  }

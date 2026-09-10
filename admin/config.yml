@@ -1,0 +1,131 @@
+backend:
+  name: git-gateway
+  branch: main
+
+publish_mode: simple
+media_folder: "src/assets/uploads"
+public_folder: "/assets/uploads"
+
+locale: "ru"
+
+collections:
+  - name: "secular_works"
+    label: "Светский каталог"
+    label_singular: "Произведение"
+    folder: "src/secular-works"
+    create: true
+    slug: "{{order}}-{{slug}}"
+    summary: "№{{order}} — {{title_ru}}"
+    fields:
+      - { label: "Название (RU)", name: "title_ru", widget: "string" }
+      - { label: "Title (EN)", name: "title_en", widget: "string" }
+      - { label: "Состав (RU)", name: "forces_ru", widget: "string" }
+      - { label: "Forces (EN)", name: "forces_en", widget: "string" }
+      - { label: "Хронометраж (например 3:40)", name: "duration", widget: "string" }
+      - label: "Сложность (RU)"
+        name: "difficulty_ru"
+        widget: "select"
+        options: ["Лёгкий уровень", "Средний уровень", "Продвинутый уровень"]
+      - label: "Difficulty (EN)"
+        name: "difficulty_en"
+        widget: "select"
+        options: ["Easy", "Intermediate", "Advanced"]
+      - label: "Состав исполнителей (фильтр)"
+        name: "category"
+        widget: "select"
+        options:
+          - { label: "A cappella", value: "acappella" }
+          - { label: "Хор + ф-но/орган", value: "piano" }
+          - { label: "Хор + оркестр", value: "orchestra" }
+          - { label: "Оркестровые", value: "orchestral" }
+          - { label: "Вокал соло", value: "solo" }
+          - { label: "Детский репертуар", value: "children" }
+      - label: "Теги — повод"
+        name: "tags"
+        widget: "select"
+        multiple: true
+        options: ["concertnaya", "prazdnichnaya", "svadebnaya", "detskaya", "liricheskaya"]
+        hint: "concertnaya=Концертная, prazdnichnaya=Праздничная, svadebnaya=Свадебная, detskaya=Детская, liricheskaya=Лирическая"
+      - { label: "Версия партитуры", name: "version", widget: "string", default: "v1.0" }
+      - { label: "Номер по каталогу", name: "order", widget: "number", value_type: "int" }
+      - { label: "Ссылка на аудио (mp3)", name: "audio_url", widget: "string", required: false }
+      - { label: "Ссылка на PDF-превью", name: "pdf_url", widget: "string", required: false }
+      - { label: "Ссылка на покупку (Gumroad/Payhip)", name: "buy_url", widget: "string", required: false }
+
+  - name: "sacred_works"
+    label: "Духовный каталог"
+    label_singular: "Произведение"
+    folder: "src/sacred-works"
+    create: true
+    slug: "{{order}}-{{slug}}"
+    summary: "№{{order}} — {{title_ru}}"
+    fields:
+      - { label: "Название (RU)", name: "title_ru", widget: "string" }
+      - { label: "Title (EN)", name: "title_en", widget: "string" }
+      - { label: "Состав (RU)", name: "forces_ru", widget: "string" }
+      - { label: "Forces (EN)", name: "forces_en", widget: "string" }
+      - { label: "Хронометраж (например 3:40)", name: "duration", widget: "string" }
+      - label: "Сложность (RU)"
+        name: "difficulty_ru"
+        widget: "select"
+        options: ["Лёгкий уровень", "Средний уровень", "Продвинутый уровень"]
+      - label: "Difficulty (EN)"
+        name: "difficulty_en"
+        widget: "select"
+        options: ["Easy", "Intermediate", "Advanced"]
+      - label: "Состав исполнителей (фильтр)"
+        name: "category"
+        widget: "select"
+        options:
+          - { label: "A cappella", value: "acappella" }
+          - { label: "Хор + ф-но/орган", value: "piano" }
+          - { label: "Хор + оркестр", value: "orchestra" }
+          - { label: "Оркестровые", value: "orchestral" }
+          - { label: "Вокал соло", value: "solo" }
+          - { label: "Детский репертуар", value: "children" }
+      - label: "Теги — повод"
+        name: "tags"
+        widget: "select"
+        multiple: true
+        options: ["rozhdestvo", "pasha", "svadebnaya", "uteshenie", "hvala"]
+        hint: "rozhdestvo=Рождество, pasha=Пасха, svadebnaya=Свадебная, uteshenie=Утешение, hvala=Хвала"
+      - { label: "Версия партитуры", name: "version", widget: "string", default: "v1.0" }
+      - { label: "Номер по каталогу", name: "order", widget: "number", value_type: "int" }
+      - { label: "Ссылка на аудио (mp3)", name: "audio_url", widget: "string", required: false }
+      - { label: "Ссылка на PDF-превью", name: "pdf_url", widget: "string", required: false }
+      - { label: "Ссылка на покупку (Gumroad/Payhip)", name: "buy_url", widget: "string", required: false }
+
+  - name: "journal"
+    label: "Мастерская (новости)"
+    label_singular: "Запись"
+    folder: "src/journal"
+    create: true
+    slug: "{{year}}-{{month}}-{{slug}}"
+    summary: "{{date_ru}} — {{title_ru}}"
+    fields:
+      - { label: "Дата, как показывать (RU)", name: "date_ru", widget: "string", hint: "например: Сентябрь 2026" }
+      - { label: "Date, as shown (EN)", name: "date_en", widget: "string", hint: "e.g. September 2026" }
+      - { label: "Дата для сортировки", name: "date_sort", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "Заголовок (RU)", name: "title_ru", widget: "string" }
+      - { label: "Title (EN)", name: "title_en", widget: "string" }
+      - { label: "Текст (RU)", name: "text_ru", widget: "text" }
+      - { label: "Text (EN)", name: "text_en", widget: "text" }
+      - { label: "Демо-аудио, ссылка (необязательно)", name: "demo_audio", widget: "string", required: false }
+
+  - name: "about"
+    label: "О себе"
+    files:
+      - label: "Текст «О себе»"
+        name: "about"
+        file: "src/_data/about.yml"
+        fields:
+          - { label: "Био (RU)", name: "bio_ru", widget: "text" }
+          - { label: "Bio (EN)", name: "bio_en", widget: "text" }
+          - label: "Образование"
+            name: "education"
+            widget: "list"
+            fields:
+              - { label: "Строка (RU)", name: "ru", widget: "string" }
+              - { label: "Line (EN)", name: "en", widget: "string" }
+          - { label: "Заключительная фраза (RU)", name: "closing_ru", widget: "text" }
+          - { label: "Closing line (EN)", name: "closing_en", widget: "text" }

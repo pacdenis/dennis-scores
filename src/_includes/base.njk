@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ru" data-lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ metaTitle }}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,600;0,700;1,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/site.css">
+</head>
+<body style="--accent: var(--{{ accent }})">
+
+<header>
+  <div class="nav">
+    <a class="wordmark" href="/">
+      Денис Пацюк
+      <small><span class="i18n-ru">Хормейстер · Аранжировщик · Композитор</span><span class="i18n-en">Choirmaster · Arranger · Composer</span></small>
+    </a>
+    <button id="navToggle" aria-label="Меню">☰</button>
+    <nav class="links" id="navLinks">
+      <a href="#about"><span class="i18n-ru">О себе</span><span class="i18n-en">About</span></a>
+      <a href="#journal"><span class="i18n-ru">Мастерская</span><span class="i18n-en">Studio log</span></a>
+      <a href="#catalog"><span class="i18n-ru">Каталог</span><span class="i18n-en">Catalog</span></a>
+      <a href="#services"><span class="i18n-ru">Услуги</span><span class="i18n-en">Services</span></a>
+      <a href="#contact"><span class="i18n-ru">Контакты</span><span class="i18n-en">Contact</span></a>
+    </nav>
+    <div class="lang-switch">
+      <button type="button" data-lang="ru" class="active">RU</button>
+      <button type="button" data-lang="en">EN</button>
+    </div>
+  </div>
+  <div class="cross-link">
+    <div class="wrap">
+      <a href="{{ crossLinkHref }}"><span class="i18n-ru">{{ crossLinkTextRu }}</span><span class="i18n-en">{{ crossLinkTextEn }}</span></a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap">
+      <div class="eyebrow"><span class="i18n-ru">{{ heroEyebrowRu }}</span><span class="i18n-en">{{ heroEyebrowEn }}</span></div>
+      <h1>
+        <span class="i18n-ru">{{ heroH1Ru }}</span>
+        <span class="i18n-en">{{ heroH1En }}</span>
+      </h1>
+      <p class="lede">
+        <span class="i18n-ru">{{ heroLedeRu }}</span>
+        <span class="i18n-en">{{ heroLedeEn }}</span>
+      </p>
+      <div class="actions">
+        <a class="btn primary" href="#catalog"><span class="i18n-ru">Смотреть каталог</span><span class="i18n-en">Browse catalog</span></a>
+        <a class="btn ghost" href="#contact"><span class="i18n-ru">Обсудить заказ</span><span class="i18n-en">Discuss a commission</span></a>
+      </div>
+    </div>
+  </section>
+
+  <div class="stave"></div>
+
+  <section id="about">
+    <div class="wrap">
+      <div class="about-grid">
+        <div class="monogram">ДП</div>
+        <div class="about-text">
+          <span class="role"><span class="i18n-ru">О себе</span><span class="i18n-en">About</span></span>
+          <p>
+            <span class="i18n-ru">{{ about.bio_ru }}</span>
+            <span class="i18n-en">{{ about.bio_en }}</span>
+          </p>
+          <p>
+            <span class="i18n-ru">Образование:</span><span class="i18n-en">Education:</span>
+          </p>
+          <ul class="edu-list">
+            {% for item in about.education %}
+            <li><span class="i18n-ru">{{ item.ru }}</span><span class="i18n-en">{{ item.en }}</span></li>
+            {% endfor %}
+          </ul>
+          <p>
+            <span class="i18n-ru">{{ about.closing_ru }}</span>
+            <span class="i18n-en">{{ about.closing_en }}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="stave"></div>
+
+  <section id="journal">
+    <div class="wrap">
+      <div class="section-head">
+        <h2><span class="i18n-ru">Мастерская</span><span class="i18n-en">Studio log</span></h2>
+        <p>
+          <span class="i18n-ru">Коротко о том, над чем сейчас работаю и что недавно закончил — с демо, где это уместно.</span>
+          <span class="i18n-en">Short notes on what I'm currently working on and what's recently finished — with a demo where relevant.</span>
+        </p>
+      </div>
+
+      <ul class="journal-list">
+        {% for entry in collections.journal %}
+        <li class="journal-entry">
+          <div class="journal-date"><span class="i18n-ru">{{ entry.data.date_ru }}</span><span class="i18n-en">{{ entry.data.date_en }}</span></div>
+          <div class="journal-title"><span class="i18n-ru">{{ entry.data.title_ru }}</span><span class="i18n-en">{{ entry.data.title_en }}</span></div>
+          <div class="journal-text">
+            <span class="i18n-ru">{{ entry.data.text_ru }}</span>
+            <span class="i18n-en">{{ entry.data.text_en }}</span>
+          </div>
+          {% if entry.data.demo_audio %}
+          <div class="journal-demo">
+            <button class="icon-btn play" data-audio="{{ entry.data.demo_audio }}">▶ <span class="i18n-ru">Демо</span><span class="i18n-en">Demo</span></button>
+            <audio class="preview" controls data-audio="{{ entry.data.demo_audio }}"></audio>
+          </div>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </section>
+
+  <div class="stave"></div>
+
+  <section id="catalog">
+    <div class="wrap">
+      <div class="section-head">
+        <h2><span class="i18n-ru">Каталог</span><span class="i18n-en">Catalog</span></h2>
+        <p>
+          <span class="i18n-ru">{{ catalogIntroRu }}</span>
+          <span class="i18n-en">{{ catalogIntroEn }}</span>
+        </p>
+      </div>
+
+      <div class="filter-label"><span class="i18n-ru">Состав</span><span class="i18n-en">Forces</span></div>
+      <div class="filters type-filters">
+        <button class="chip active" data-filter="all">
+          <span class="i18n-ru">Все</span><span class="i18n-en">All</span><span class="chip-count"></span>
+        </button>
+        <button class="chip" data-filter="acappella"><span class="i18n-ru">A cappella</span><span class="i18n-en">A cappella</span><span class="chip-count"></span></button>
+        <button class="chip" data-filter="piano"><span class="i18n-ru">Хор + ф-но/орган</span><span class="i18n-en">Choir + piano/organ</span><span class="chip-count"></span></button>
+        <button class="chip" data-filter="orchestra"><span class="i18n-ru">Хор + оркестр</span><span class="i18n-en">Choir + orchestra</span><span class="chip-count"></span></button>
+        <button class="chip" data-filter="orchestral"><span class="i18n-ru">Оркестровые</span><span class="i18n-en">Orchestral</span><span class="chip-count"></span></button>
+        <button class="chip" data-filter="solo"><span class="i18n-ru">Вокал соло</span><span class="i18n-en">Solo vocal</span><span class="chip-count"></span></button>
+        <button class="chip" data-filter="children"><span class="i18n-ru">Детский репертуар</span><span class="i18n-en">Children's</span><span class="chip-count"></span></button>
+      </div>
+
+      <div class="filter-label"><span class="i18n-ru">Повод</span><span class="i18n-en">Occasion</span></div>
+      <div class="filters tag-filters">
+        <button class="chip active" data-filter="all">
+          <span class="i18n-ru">Все</span><span class="i18n-en">All</span><span class="chip-count"></span>
+        </button>
+        {% for t in tagFilters %}
+        <button class="chip" data-filter="{{ t.value }}"><span class="i18n-ru">{{ t.ru }}</span><span class="i18n-en">{{ t.en }}</span><span class="chip-count"></span></button>
+        {% endfor %}
+      </div>
+
+      <div class="catalog-section active">
+        <ul class="work-list">
+          {% for work in collections[worksCollection] %}
+          <li class="work" data-cat="{{ work.data.category }}" data-tags="{{ work.data.tags | join(' ') }}">
+            <span class="work-no">No. {{ work.data.order | pad3 }}</span>
+            <div>
+              <div class="work-title"><span class="i18n-ru">{{ work.data.title_ru }}</span><span class="i18n-en">{{ work.data.title_en }}</span></div>
+              <div class="work-meta">
+                <span><span class="i18n-ru">{{ work.data.forces_ru }}</span><span class="i18n-en">{{ work.data.forces_en }}</span></span><span>{{ work.data.duration }}</span>
+                <span class="i18n-ru">{{ work.data.difficulty_ru }}</span><span class="i18n-en">{{ work.data.difficulty_en }}</span><span class="version-badge">{{ work.data.version }}</span>
+              </div>
+              <audio class="preview" controls data-audio="{{ work.data.audio_url }}"></audio>
+            </div>
+            <div class="work-actions">
+              <button class="icon-btn play" data-audio="{{ work.data.audio_url }}">▶ <span class="i18n-ru">Прослушать</span><span class="i18n-en">Preview</span></button>
+              <a class="icon-btn pdf" href="{{ work.data.pdf_url or '#' }}" data-pdf="{{ work.data.pdf_url }}">PDF</a>
+              <a class="icon-btn buy" href="{{ work.data.buy_url or '#' }}"><span class="i18n-ru">Купить</span><span class="i18n-en">Buy</span></a>
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="stave"></div>
+
+  <section id="services">
+    <div class="wrap">
+      <div class="section-head">
+        <h2><span class="i18n-ru">Услуги на заказ</span><span class="i18n-en">Custom commissions</span></h2>
+        <p>
+          <span class="i18n-ru">Помимо готового каталога, беру индивидуальные заказы для оркестров, продюсеров и издателей.</span>
+          <span class="i18n-en">Beyond the ready catalog, I take individual commissions for orchestras, producers, and publishers.</span>
+        </p>
+      </div>
+      <div class="services-grid">
+        <div class="service">
+          <span class="num">01</span>
+          <h3><span class="i18n-ru">Аранжировка</span><span class="i18n-en">Arrangement</span></h3>
+          <p><span class="i18n-ru">Переложение существующего произведения для нового состава — от соло до полного хора и оркестра.</span><span class="i18n-en">Reworking an existing piece for a new ensemble — from solo voice to full choir and orchestra.</span></p>
+        </div>
+        <div class="service">
+          <span class="num">02</span>
+          <h3><span class="i18n-ru">Оркестровка</span><span class="i18n-en">Orchestration</span></h3>
+          <p><span class="i18n-ru">Полная оркестровая партитура по клавиру или лид-шиту, с учётом состава и уровня коллектива.</span><span class="i18n-en">A full orchestral score from a piano reduction or lead sheet, matched to the ensemble's size and level.</span></p>
+        </div>
+        <div class="service">
+          <span class="num">03</span>
+          <h3><span class="i18n-ru">Композиция на заказ</span><span class="i18n-en">Original composition</span></h3>
+          <p><span class="i18n-ru">Оригинальное произведение под конкретное событие, состав или текст.</span><span class="i18n-en">An original piece written for a specific event, ensemble, or text.</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="stave"></div>
+
+  <section id="contact">
+    <div class="wrap">
+      <div class="contact-box">
+        <h2><span class="i18n-ru">Обсудим ваш проект?</span><span class="i18n-en">Let's discuss your project</span></h2>
+        <p class="sub">
+          <span class="i18n-ru">Заполните форму — сообщение придёт мне напрямую, без публикации email на странице.</span>
+          <span class="i18n-en">Fill in the form — the message goes straight to me, with no email address published on the page.</span>
+        </p>
+        <form class="contact-form" id="contactForm" action="https://formspree.io/f/xaeyaoon" method="POST">
+          <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off">
+          <input type="text" name="name" data-ph-ru="Ваше имя" data-ph-en="Your name" required>
+          <input type="email" name="email" data-ph-ru="Ваш email" data-ph-en="Your email" required>
+          <textarea name="message" data-ph-ru="Расскажите о проекте" data-ph-en="Tell me about your project" required></textarea>
+          <button type="submit" class="btn primary" id="contactSubmit"><span class="i18n-ru">Отправить</span><span class="i18n-en">Send</span></button>
+        </form>
+        <div class="form-message success" id="formSuccess" hidden>
+          <span class="i18n-ru">Спасибо! Сообщение отправлено — отвечу как можно скорее.</span>
+          <span class="i18n-en">Thank you! Your message has been sent — I'll reply as soon as I can.</span>
+        </div>
+        <div class="form-message error" id="formError" hidden>
+          <span class="i18n-ru">Что-то пошло не так. Попробуйте ещё раз чуть позже.</span>
+          <span class="i18n-en">Something went wrong. Please try again in a moment.</span>
+        </div>
+        <p class="contact-note">
+          <span class="i18n-ru">Форма подключается через Formspree — бесплатный сервис пересылки писем.</span>
+          <span class="i18n-en">Powered by Formspree — a free form-to-email relay service.</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>© <span id="year"></span> Денис Пацюк</p>
+    <p><span class="i18n-ru">Польша</span><span class="i18n-en">Poland</span></p>
+  </div>
+</footer>
+
+<script src="/js/site.js"></script>
+</body>
+</html>
