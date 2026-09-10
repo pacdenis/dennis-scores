@@ -48,8 +48,8 @@ collections:
         hint: "concertnaya=Концертная, prazdnichnaya=Праздничная, svadebnaya=Свадебная, detskaya=Детская, liricheskaya=Лирическая"
       - { label: "Версия партитуры", name: "version", widget: "string", default: "v1.0" }
       - { label: "Номер по каталогу", name: "order", widget: "number", value_type: "int" }
-      - { label: "Ссылка на аудио (mp3)", name: "audio_url", widget: "string", required: false }
-      - { label: "Ссылка на PDF-превью", name: "pdf_url", widget: "string", required: false }
+      - { label: "Аудио-превью (mp3)", name: "audio_url", widget: "file", media_library: { config: { multiple: false } }, required: false }
+      - { label: "PDF-превью (первая страница)", name: "pdf_url", widget: "file", media_library: { config: { multiple: false } }, required: false }
       - { label: "Ссылка на покупку (Gumroad/Payhip)", name: "buy_url", widget: "string", required: false }
 
   - name: "sacred_works"
@@ -91,8 +91,8 @@ collections:
         hint: "rozhdestvo=Рождество, pasha=Пасха, svadebnaya=Свадебная, uteshenie=Утешение, hvala=Хвала"
       - { label: "Версия партитуры", name: "version", widget: "string", default: "v1.0" }
       - { label: "Номер по каталогу", name: "order", widget: "number", value_type: "int" }
-      - { label: "Ссылка на аудио (mp3)", name: "audio_url", widget: "string", required: false }
-      - { label: "Ссылка на PDF-превью", name: "pdf_url", widget: "string", required: false }
+      - { label: "Аудио-превью (mp3)", name: "audio_url", widget: "file", media_library: { config: { multiple: false } }, required: false }
+      - { label: "PDF-превью (первая страница)", name: "pdf_url", widget: "file", media_library: { config: { multiple: false } }, required: false }
       - { label: "Ссылка на покупку (Gumroad/Payhip)", name: "buy_url", widget: "string", required: false }
 
   - name: "journal"
