@@ -167,10 +167,28 @@
               </div>
               <audio class="preview" controls data-audio="{{ work.data.audio_url }}"></audio>
             </div>
-            <div class="work-actions">
-              <button class="icon-btn play" data-audio="{{ work.data.audio_url }}">▶ <span class="i18n-ru">Прослушать</span><span class="i18n-en">Preview</span></button>
-              <a class="icon-btn pdf" href="{{ work.data.pdf_url or '#' }}" data-pdf="{{ work.data.pdf_url }}">PDF</a>
-              <a class="icon-btn buy" href="{{ work.data.buy_url or '#' }}"><span class="i18n-ru">Купить</span><span class="i18n-en">Buy</span></a>
+           <div class="work-actions"> 
+               {% if work.data.performance_url %} <a 
+                      class="icon-btn play" href="{{ work.data.performance_url }}" target="_blank" rel="noopener">▶ 
+                        <span   
+                      class="i18n-ru">Смотреть исполнение</span><span class="i18n-en">Watch performance</span></a> {% else %} 
+                          <button 
+                      class="icon-btn play" data-audio="{{ work.data.audio_url }}">▶ 
+                                <span 
+                      class="i18n-ru">Прослушать</span><span class="i18n-en">Preview</span></button> 
+                            {% endif %} <a 
+                      class="icon-btn pdf" href="{{ work.data.pdf_url or '#' }}" data-pdf="{{ work.data.pdf_url }}">PDF</a> 
+                  {% if work.data.access_type == "free" %} <a 
+                      class="icon-btn buy" href="{{ work.data.buy_url or work.data.performance_url or '#' }}" target="_blank" rel="noopener">
+                                  <span 
+                      class="i18n-ru">Скачать бесплатно</span>
+                                  <span 
+                      class="i18n-en">Free download</span></a> 
+                            {% else %} <a 
+                      class="icon-btn buy" href="{{ work.data.buy_url or '#' }}">
+                                  <span 
+                      class="i18n-ru">Купить</span><span class="i18n-en">Buy</span></a>   
+               {% endif %}
             </div>
           </li>
           {% endfor %}
