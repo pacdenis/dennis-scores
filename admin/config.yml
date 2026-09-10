@@ -48,6 +48,8 @@ collections:
         hint: "concertnaya=Концертная, prazdnichnaya=Праздничная, svadebnaya=Свадебная, detskaya=Детская, liricheskaya=Лирическая"
       - { label: "Версия партитуры", name: "version", widget: "string", default: "v1.0" }
       - { label: "Номер по каталогу", name: "order", widget: "number", value_type: "int" }
+      - { label: "Статус", name: "access_type", widget: "select", default: "for_sale", options: [{ label: "Продажа", value: "for_sale" }, { label: "Свободный доступ", value: "free" }] }
+      - { label: "Ссылка на готовое исполнение (YouTube и т.п.)", name: "performance_url", widget: "string", required: false }
       - { label: "Аудио-превью (mp3)", name: "audio_url", widget: "file", media_library: { config: { multiple: false } }, required: false }
       - { label: "PDF-превью (первая страница)", name: "pdf_url", widget: "file", media_library: { config: { multiple: false } }, required: false }
       - { label: "Ссылка на покупку (Gumroad/Payhip)", name: "buy_url", widget: "string", required: false }
@@ -91,6 +93,8 @@ collections:
         hint: "rozhdestvo=Рождество, pasha=Пасха, svadebnaya=Свадебная, uteshenie=Утешение, hvala=Хвала"
       - { label: "Версия партитуры", name: "version", widget: "string", default: "v1.0" }
       - { label: "Номер по каталогу", name: "order", widget: "number", value_type: "int" }
+      - { label: "Статус", name: "access_type", widget: "select", default: "for_sale", options: [{ label: "Продажа", value: "for_sale" }, { label: "Свободный доступ", value: "free" }] }
+      - { label: "Ссылка на готовое исполнение (YouTube и т.п.)", name: "performance_url", widget: "string", required: false }
       - { label: "Аудио-превью (mp3)", name: "audio_url", widget: "file", media_library: { config: { multiple: false } }, required: false }
       - { label: "PDF-превью (первая страница)", name: "pdf_url", widget: "file", media_library: { config: { multiple: false } }, required: false }
       - { label: "Ссылка на покупку (Gumroad/Payhip)", name: "buy_url", widget: "string", required: false }
