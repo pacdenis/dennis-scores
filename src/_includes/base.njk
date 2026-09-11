@@ -129,6 +129,10 @@
           <span class="i18n-ru">{{ catalogIntroRu }}</span>
           <span class="i18n-en">{{ catalogIntroEn }}</span>
         </p>
+        <p class="catalog-note">
+          <span class="i18n-ru">Все произведения — цифровая загрузка. Ссылка на файл приходит сразу после оплаты через Gumroad/Payhip.</span>
+          <span class="i18n-en">All works are digital downloads. The file link arrives immediately after payment via Gumroad/Payhip.</span>
+        </p>
       </div>
 
       <div class="filter-label"><span class="i18n-ru">Состав</span><span class="i18n-en">Forces</span></div>
@@ -168,13 +172,25 @@
               <audio class="preview" controls data-audio="{{ work.data.audio_url }}"></audio>
             </div>
             <div class="work-actions">
+              {% if work.data.performance_url %}
+              <a class="icon-btn play" href="{{ work.data.performance_url }}" target="_blank" rel="noopener">▶ <span class="i18n-ru">Смотреть исполнение</span><span class="i18n-en">Watch performance</span></a>
+              {% else %}
               <button class="icon-btn play" data-audio="{{ work.data.audio_url }}">▶ <span class="i18n-ru">Прослушать</span><span class="i18n-en">Preview</span></button>
+              {% endif %}
               <a class="icon-btn pdf" href="{{ work.data.pdf_url or '#' }}" data-pdf="{{ work.data.pdf_url }}">PDF</a>
+              {% if work.data.access_type == "free" %}
+              <a class="icon-btn buy" href="{{ work.data.buy_url or work.data.performance_url or '#' }}" target="_blank" rel="noopener"><span class="i18n-ru">Скачать бесплатно</span><span class="i18n-en">Free download</span></a>
+              {% else %}
               <a class="icon-btn buy" href="{{ work.data.buy_url or '#' }}"><span class="i18n-ru">Купить</span><span class="i18n-en">Buy</span></a>
+              {% endif %}
             </div>
           </li>
           {% endfor %}
         </ul>
+        <p class="empty-state" id="emptyState" hidden>
+          <span class="i18n-ru">По этому сочетанию пока ничего нет. Попробуйте другой повод или состав.</span>
+          <span class="i18n-en">Nothing matches this combination yet. Try a different occasion or ensemble.</span>
+        </p>
       </div>
     </div>
   </section>

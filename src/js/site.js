@@ -60,13 +60,18 @@
   var tagFilter = 'all';
 
   function applyFilters(){
+    var visibleCount = 0;
     allWorks.forEach(function(li){
       var cat = li.getAttribute('data-cat');
       var tags = (li.getAttribute('data-tags') || '').split(' ');
       var typeOk = (typeFilter === 'all' || cat === typeFilter);
       var tagOk = (tagFilter === 'all' || tags.indexOf(tagFilter) !== -1);
-      li.classList.toggle('hidden-by-filter', !(typeOk && tagOk));
+      var show = typeOk && tagOk;
+      li.classList.toggle('hidden-by-filter', !show);
+      if(show) visibleCount++;
     });
+    var emptyState = document.getElementById('emptyState');
+    if(emptyState) emptyState.hidden = visibleCount > 0;
   }
 
   function updateChipCounts(){
