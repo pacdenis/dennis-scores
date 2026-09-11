@@ -4,6 +4,8 @@ module.exports = function (eleventyConfig) {
   // static assets
   eleventyConfig.addPassthroughCopy({ "src/css": "css" });
   eleventyConfig.addPassthroughCopy({ "src/js": "js" });
+  // files uploaded through the CMS media library (audio, PDF previews)
+  eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
   // Decap CMS admin panel lives at /admin on the published site
   eleventyConfig.addPassthroughCopy({ admin: "admin" });
 
