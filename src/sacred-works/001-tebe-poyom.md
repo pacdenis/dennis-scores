@@ -1,15 +1,14 @@
 ---
-title_ru: Слава Отцу и Сыну и Святому Духу! Единородный Сыне.
-title_en: Glory to the Father, and to the Son, and to the Holy Spirit! Only-begotten Son.
-forces_ru: SSAATBB
-forces_en: SSAATBB
-duration: 3:15
-difficulty_ru: Продвинутый уровень
-difficulty_en: Advanced
-category: acappella
-tags:
-  - hvala
-version: v2.0
+title_ru: "Тебе поём"
+title_en: "Tebe Poyom"
+forces_ru: "SATB"
+forces_en: "SATB"
+duration: "3:15"
+difficulty_ru: "Средний уровень"
+difficulty_en: "Intermediate"
+category: smeshanny_hor
+tags: [hvala]
+version: "v1.0"
 order: 1
 audio_url: ""
 pdf_url: ""

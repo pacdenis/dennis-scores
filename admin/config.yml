@@ -48,11 +48,17 @@ collections:
         hint: "concertnaya=Концертная, prazdnichnaya=Праздничная, svadebnaya=Свадебная, detskaya=Детская, liricheskaya=Лирическая"
       - { label: "Версия партитуры", name: "version", widget: "string", default: "v1.0" }
       - { label: "Номер по каталогу", name: "order", widget: "number", value_type: "int" }
-      - { label: "Статус", name: "access_type", widget: "select", default: "for_sale", options: [{ label: "Продажа", value: "for_sale" }, { label: "Свободный доступ", value: "free" }] }
-      - { label: "Ссылка на готовое исполнение (YouTube и т.п.)", name: "performance_url", widget: "string", required: false }
-      - { label: "Аудио-превью (mp3)", name: "audio_url", widget: "file", media_library: { config: { multiple: false } }, required: false }
+      - label: "Статус"
+        name: "access_type"
+        widget: "select"
+        default: "for_sale"
+        options:
+          - { label: "Продажа", value: "for_sale" }
+          - { label: "Свободный доступ", value: "free" }
+      - { label: "Ссылка на готовое исполнение (YouTube и т.п.)", name: "performance_url", widget: "string", required: false, hint: "Если есть — на сайте появится кнопка «Смотреть исполнение» вместо встроенного плеера" }
+      - { label: "Аудио-превью (mp3, свой отрывок)", name: "audio_url", widget: "file", media_library: { config: { multiple: false } }, required: false }
       - { label: "PDF-превью (первая страница)", name: "pdf_url", widget: "file", media_library: { config: { multiple: false } }, required: false }
-      - { label: "Ссылка на покупку (Gumroad/Payhip)", name: "buy_url", widget: "string", required: false }
+      - { label: "Ссылка на покупку/доступ", name: "buy_url", widget: "string", required: false, hint: "Для «Продажи» — ссылка на Gumroad/Payhip. Для «Свободного доступа» — куда вести за бесплатной копией (или оставь пустым, если доступ только через ссылку на исполнение выше)" }
 
   - name: "sacred_works"
     label: "Духовный каталог"
@@ -79,25 +85,33 @@ collections:
         name: "category"
         widget: "select"
         options:
-          - { label: "A cappella", value: "acappella" }
+          - { label: "Смешанный хор a cappella", value: "smeshanny_hor" }
+          - { label: "Мужской хор a cappella", value: "muzhskoy_hor" }
+          - { label: "Женский хор a cappella", value: "zhenskiy_hor" }
+          - { label: "Детский хор", value: "detskiy_hor" }
           - { label: "Хор + ф-но/орган", value: "piano" }
           - { label: "Хор + оркестр", value: "orchestra" }
           - { label: "Оркестровые", value: "orchestral" }
           - { label: "Вокал соло", value: "solo" }
-          - { label: "Детский репертуар", value: "children" }
       - label: "Теги — повод"
         name: "tags"
         widget: "select"
         multiple: true
-        options: ["rozhdestvo", "pasha", "svadebnaya", "uteshenie", "hvala"]
-        hint: "rozhdestvo=Рождество, pasha=Пасха, svadebnaya=Свадебная, uteshenie=Утешение, hvala=Хвала"
+        options: ["rozhdestvo", "pasha", "svadebnaya", "uteshenie", "hvala", "molitvennaya"]
+        hint: "rozhdestvo=Рождество, pasha=Пасха, svadebnaya=Свадебная, uteshenie=Утешение, hvala=Хвала и благодарение, molitvennaya=Молитвенные"
       - { label: "Версия партитуры", name: "version", widget: "string", default: "v1.0" }
       - { label: "Номер по каталогу", name: "order", widget: "number", value_type: "int" }
-      - { label: "Статус", name: "access_type", widget: "select", default: "for_sale", options: [{ label: "Продажа", value: "for_sale" }, { label: "Свободный доступ", value: "free" }] }
-      - { label: "Ссылка на готовое исполнение (YouTube и т.п.)", name: "performance_url", widget: "string", required: false }
-      - { label: "Аудио-превью (mp3)", name: "audio_url", widget: "file", media_library: { config: { multiple: false } }, required: false }
+      - label: "Статус"
+        name: "access_type"
+        widget: "select"
+        default: "for_sale"
+        options:
+          - { label: "Продажа", value: "for_sale" }
+          - { label: "Свободный доступ", value: "free" }
+      - { label: "Ссылка на готовое исполнение (YouTube и т.п.)", name: "performance_url", widget: "string", required: false, hint: "Если есть — на сайте появится кнопка «Смотреть исполнение» вместо встроенного плеера" }
+      - { label: "Аудио-превью (mp3, свой отрывок)", name: "audio_url", widget: "file", media_library: { config: { multiple: false } }, required: false }
       - { label: "PDF-превью (первая страница)", name: "pdf_url", widget: "file", media_library: { config: { multiple: false } }, required: false }
-      - { label: "Ссылка на покупку (Gumroad/Payhip)", name: "buy_url", widget: "string", required: false }
+      - { label: "Ссылка на покупку/доступ", name: "buy_url", widget: "string", required: false, hint: "Для «Продажи» — ссылка на Gumroad/Payhip. Для «Свободного доступа» — куда вести за бесплатной копией (или оставь пустым, если доступ только через ссылку на исполнение выше)" }
 
   - name: "journal"
     label: "Мастерская (новости)"

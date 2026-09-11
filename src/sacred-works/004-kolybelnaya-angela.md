@@ -6,7 +6,7 @@ forces_en: "Children's choir + piano"
 duration: "2:45"
 difficulty_ru: "Лёгкий уровень"
 difficulty_en: "Easy"
-category: children
+category: detskiy_hor
 tags: [rozhdestvo]
 version: "v1.0"
 order: 4

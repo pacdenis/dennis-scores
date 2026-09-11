@@ -140,12 +140,9 @@
         <button class="chip active" data-filter="all">
           <span class="i18n-ru">Все</span><span class="i18n-en">All</span><span class="chip-count"></span>
         </button>
-        <button class="chip" data-filter="acappella"><span class="i18n-ru">A cappella</span><span class="i18n-en">A cappella</span><span class="chip-count"></span></button>
-        <button class="chip" data-filter="piano"><span class="i18n-ru">Хор + ф-но/орган</span><span class="i18n-en">Choir + piano/organ</span><span class="chip-count"></span></button>
-        <button class="chip" data-filter="orchestra"><span class="i18n-ru">Хор + оркестр</span><span class="i18n-en">Choir + orchestra</span><span class="chip-count"></span></button>
-        <button class="chip" data-filter="orchestral"><span class="i18n-ru">Оркестровые</span><span class="i18n-en">Orchestral</span><span class="chip-count"></span></button>
-        <button class="chip" data-filter="solo"><span class="i18n-ru">Вокал соло</span><span class="i18n-en">Solo vocal</span><span class="chip-count"></span></button>
-        <button class="chip" data-filter="children"><span class="i18n-ru">Детский репертуар</span><span class="i18n-en">Children's</span><span class="chip-count"></span></button>
+        {% for t in typeFilters %}
+        <button class="chip" data-filter="{{ t.value }}"><span class="i18n-ru">{{ t.ru }}</span><span class="i18n-en">{{ t.en }}</span><span class="chip-count"></span></button>
+        {% endfor %}
       </div>
 
       <div class="filter-label"><span class="i18n-ru">Повод</span><span class="i18n-en">Occasion</span></div>
