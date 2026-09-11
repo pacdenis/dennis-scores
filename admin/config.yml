@@ -47,7 +47,7 @@ collections:
         options: ["concertnaya", "prazdnichnaya", "svadebnaya", "detskaya", "liricheskaya"]
         hint: "concertnaya=Концертная, prazdnichnaya=Праздничная, svadebnaya=Свадебная, detskaya=Детская, liricheskaya=Лирическая"
       - { label: "Версия партитуры", name: "version", widget: "string", default: "v1.0" }
-      - { label: "Номер по каталогу", name: "order", widget: "number", value_type: "int" }
+      - { label: "Дата создания/публикации", name: "date_created", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false, picker_utc: true, hint: "Реальная дата, когда произведение было написано или впервые опубликовано — по ней автоматически сортируется каталог" }
       - label: "Статус"
         name: "access_type"
         widget: "select"
@@ -100,7 +100,7 @@ collections:
         options: ["rozhdestvo", "pasha", "svadebnaya", "uteshenie", "hvala", "molitvennaya"]
         hint: "rozhdestvo=Рождество, pasha=Пасха, svadebnaya=Свадебная, uteshenie=Утешение, hvala=Хвала и благодарение, molitvennaya=Молитвенные"
       - { label: "Версия партитуры", name: "version", widget: "string", default: "v1.0" }
-      - { label: "Номер по каталогу", name: "order", widget: "number", value_type: "int" }
+      - { label: "Дата создания/публикации", name: "date_created", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false, picker_utc: true, hint: "Реальная дата, когда произведение было написано или впервые опубликовано — по ней автоматически сортируется каталог" }
       - label: "Статус"
         name: "access_type"
         widget: "select"

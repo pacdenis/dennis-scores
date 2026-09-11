@@ -159,7 +159,7 @@
         <ul class="work-list">
           {% for work in collections[worksCollection] %}
           <li class="work" data-cat="{{ work.data.category }}" data-tags="{{ work.data.tags | join(' ') }}">
-            <span class="work-no">No. {{ work.data.order | pad3 }}</span>
+            <span class="work-no">No. {{ loop.index | pad3 }}</span>
             <div>
               <div class="work-title"><span class="i18n-ru">{{ work.data.title_ru }}</span><span class="i18n-en">{{ work.data.title_en }}</span></div>
               <div class="work-meta">
