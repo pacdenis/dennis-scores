@@ -1,8 +1,8 @@
 ---
 title_ru: Псалом 66 ("Боже, будь милостив к нам")
 title_en: Psalm 66 ("O God, be merciful to us")
-forces_ru: Хор a cappella
-forces_en: Choir a cappella
+forces_ru: SATB
+forces_en: SATB
 duration: 01:40
 difficulty_ru: Средний уровень
 difficulty_en: Intermediate
