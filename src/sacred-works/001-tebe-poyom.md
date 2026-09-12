@@ -5,7 +5,7 @@ forces_ru: SSATTBB
 forces_en: SSATTBB
 duration: 1:31
 difficulty_ru: Продвинутый уровень
-difficulty_en: Intermediate
+difficulty_en: Advanced
 category: smeshanny_hor
 tags:
   - hvala
