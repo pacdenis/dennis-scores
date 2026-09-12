@@ -1,8 +1,8 @@
 ---
 title_ru: Возвожу свои очи к горам (Псалом 120)
 title_en: I lift up my eyes to the mountains (Psalm 120)
-forces_ru: Хор a cappella
-forces_en: Choir a cappella
+forces_ru: SATB
+forces_en: SATB
 duration: 4:15
 difficulty_ru: Лёгкий уровень
 difficulty_en: Easy
