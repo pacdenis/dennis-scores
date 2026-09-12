@@ -6,7 +6,7 @@ forces_en: Piano + Vocals + 2 Violins
 duration: 3:30
 difficulty_ru: Средний уровень
 difficulty_en: Intermediate
-category: orchestral
+category: ensemble
 tags:
   - hvala
 version: v1.0
