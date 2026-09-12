@@ -171,6 +171,10 @@
   li.work.hidden-by-filter{display:none;}
   .work-no{font-family:'IBM Plex Mono',monospace; font-size:.78rem; color:var(--text-muted);}
   .work-title{font-family:'Alegreya',serif; font-size:1.18rem; font-weight:600; color:var(--ink);}
+  .work-credits{
+    margin-top:4px; display:flex; gap:12px; flex-wrap:wrap;
+    font-family:'IBM Plex Sans',sans-serif; font-size:.82rem; color:var(--text-muted); font-style:italic;
+  }
   .work-meta{
     margin-top:5px; display:flex; gap:14px; flex-wrap:wrap;
     font-family:'IBM Plex Mono',monospace; font-size:.76rem; color:var(--text-muted);

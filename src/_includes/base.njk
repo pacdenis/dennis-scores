@@ -162,6 +162,16 @@
             <span class="work-no">No. {{ loop.index | pad3 }}</span>
             <div>
               <div class="work-title"><span class="i18n-ru">{{ work.data.title_ru }}</span><span class="i18n-en">{{ work.data.title_en }}</span></div>
+              {% if work.data.composer or work.data.lyricist or work.data.arranger or work.data.editor or work.data.harmonizer or work.data.translator %}
+              <div class="work-credits">
+                {% if work.data.composer %}<span><span class="i18n-ru">Музыка:</span><span class="i18n-en">Music:</span> {{ work.data.composer }}</span>{% endif %}
+                {% if work.data.lyricist %}<span><span class="i18n-ru">Слова:</span><span class="i18n-en">Words:</span> {{ work.data.lyricist }}</span>{% endif %}
+                {% if work.data.arranger %}<span><span class="i18n-ru">Аранжировка:</span><span class="i18n-en">Arranged by:</span> {{ work.data.arranger }}</span>{% endif %}
+                {% if work.data.editor %}<span><span class="i18n-ru">Редакция:</span><span class="i18n-en">Edited by:</span> {{ work.data.editor }}</span>{% endif %}
+                {% if work.data.harmonizer %}<span><span class="i18n-ru">Гармонизация:</span><span class="i18n-en">Harmonized by:</span> {{ work.data.harmonizer }}</span>{% endif %}
+                {% if work.data.translator %}<span><span class="i18n-ru">Перевод:</span><span class="i18n-en">Translated by:</span> {{ work.data.translator }}</span>{% endif %}
+              </div>
+              {% endif %}
               <div class="work-meta">
                 <span><span class="i18n-ru">{{ work.data.forces_ru }}</span><span class="i18n-en">{{ work.data.forces_en }}</span></span><span>{{ work.data.duration }}</span>
                 <span class="i18n-ru">{{ work.data.difficulty_ru }}</span><span class="i18n-en">{{ work.data.difficulty_en }}</span><span class="version-badge">{{ work.data.version }}</span>

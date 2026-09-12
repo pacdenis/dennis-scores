@@ -19,6 +19,12 @@ collections:
     fields:
       - { label: "Название (RU)", name: "title_ru", widget: "string" }
       - { label: "Title (EN)", name: "title_en", widget: "string" }
+      - { label: "Автор музыки", name: "composer", widget: "string", required: false }
+      - { label: "Автор слов", name: "lyricist", widget: "string", required: false }
+      - { label: "Аранжировка", name: "arranger", widget: "string", required: false }
+      - { label: "Редакция", name: "editor", widget: "string", required: false }
+      - { label: "Гармонизация", name: "harmonizer", widget: "string", required: false }
+      - { label: "Перевод (на другой язык)", name: "translator", widget: "string", required: false }
       - { label: "Состав (RU)", name: "forces_ru", widget: "string" }
       - { label: "Forces (EN)", name: "forces_en", widget: "string" }
       - { label: "Хронометраж (например 3:40)", name: "duration", widget: "string" }
@@ -70,6 +76,12 @@ collections:
     fields:
       - { label: "Название (RU)", name: "title_ru", widget: "string" }
       - { label: "Title (EN)", name: "title_en", widget: "string" }
+      - { label: "Автор музыки", name: "composer", widget: "string", required: false }
+      - { label: "Автор слов", name: "lyricist", widget: "string", required: false }
+      - { label: "Аранжировка", name: "arranger", widget: "string", required: false }
+      - { label: "Редакция", name: "editor", widget: "string", required: false }
+      - { label: "Гармонизация", name: "harmonizer", widget: "string", required: false }
+      - { label: "Перевод (на другой язык)", name: "translator", widget: "string", required: false }
       - { label: "Состав (RU)", name: "forces_ru", widget: "string" }
       - { label: "Forces (EN)", name: "forces_en", widget: "string" }
       - { label: "Хронометраж (например 3:40)", name: "duration", widget: "string" }
