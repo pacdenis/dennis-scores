@@ -6,7 +6,7 @@ forces_en: Piano, Voice, 2 V-ni
 duration: 3:20
 difficulty_ru: Средний уровень
 difficulty_en: Intermediate
-category: orchestral
+category: ensemble
 tags:
   - uteshenie
 version: v1.0
