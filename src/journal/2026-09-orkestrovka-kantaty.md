@@ -2,7 +2,7 @@
 date_ru: Сентябрь 2026
 date_en: September 2026
 date_sort: 2026-09-11
-title_ru: "Аранжировки для ансамбля (Voice, Piano, 2 V-ni) "
+title_ru: "Аранжировки для ансамбля (Голос, Piano, 2 Скр.) "
 title_en: "Arrangements for ensemble (Voice, Piano, 2 Voices) "
 text_ru: |-
   Произведения: 
