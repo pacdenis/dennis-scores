@@ -14,7 +14,7 @@ collections:
     label_singular: "Произведение"
     folder: "src/secular-works"
     create: true
-    slug: "{{order}}-{{slug}}"
+    slug: "{{slug}}"
     summary: "{{date_created}} — {{title_ru}}"
     fields:
       - { label: "Название (RU)", name: "title_ru", widget: "string" }
@@ -71,7 +71,7 @@ collections:
     label_singular: "Произведение"
     folder: "src/sacred-works"
     create: true
-    slug: "{{order}}-{{slug}}"
+    slug: "{{slug}}"
     summary: "{{date_created}} — {{title_ru}}"
     fields:
       - { label: "Название (RU)", name: "title_ru", widget: "string" }
