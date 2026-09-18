@@ -193,6 +193,13 @@
                 {% endfor %}
               </div>
               {% endif %}
+              {% if work.data.text_ru or work.data.text_en %}
+              <details class="work-text">
+                <summary><span class="i18n-ru">Показать текст</span><span class="i18n-en">Show text</span></summary>
+                {% if work.data.text_ru %}<p class="i18n-ru">{{ work.data.text_ru }}</p>{% endif %}
+                {% if work.data.text_en %}<p class="i18n-en">{{ work.data.text_en }}</p>{% endif %}
+              </details>
+              {% endif %}
               <audio class="preview" controls data-audio="{{ work.data.audio_url }}"></audio>
             </div>
             <div class="work-actions">

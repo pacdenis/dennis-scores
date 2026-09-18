@@ -96,6 +96,8 @@ collections:
       - { label: "Аудио-превью (mp3, свой отрывок)", name: "audio_url", widget: "file", media_library: { config: { multiple: false } }, required: false }
       - { label: "PDF-превью (первая страница)", name: "pdf_url", widget: "file", media_library: { config: { multiple: false } }, required: false }
       - { label: "Ссылка на покупку/доступ", name: "buy_url", widget: "string", required: false, hint: "Для «Продажи» — ссылка на Gumroad/Payhip. Для «Свободного доступа» — куда вести за бесплатной копией (или оставь пустым, если доступ только через ссылку на исполнение выше)" }
+      - { label: "Текст произведения (RU)", name: "text_ru", widget: "text", required: false, hint: "Полный текст/слова произведения — на сайте будет скрыт под разворачивающимся блоком «Показать текст»" }
+      - { label: "Text (EN)", name: "text_en", widget: "text", required: false }
 
   - name: "sacred_works"
     label: "Духовный каталог"
@@ -187,6 +189,8 @@ collections:
       - { label: "Аудио-превью (mp3, свой отрывок)", name: "audio_url", widget: "file", media_library: { config: { multiple: false } }, required: false }
       - { label: "PDF-превью (первая страница)", name: "pdf_url", widget: "file", media_library: { config: { multiple: false } }, required: false }
       - { label: "Ссылка на покупку/доступ", name: "buy_url", widget: "string", required: false, hint: "Для «Продажи» — ссылка на Gumroad/Payhip. Для «Свободного доступа» — куда вести за бесплатной копией (или оставь пустым, если доступ только через ссылку на исполнение выше)" }
+      - { label: "Текст произведения (RU)", name: "text_ru", widget: "text", required: false, hint: "Полный текст/слова произведения — на сайте будет скрыт под разворачивающимся блоком «Показать текст»" }
+      - { label: "Text (EN)", name: "text_en", widget: "text", required: false }
 
   - name: "journal"
     label: "Мастерская (новости)"
