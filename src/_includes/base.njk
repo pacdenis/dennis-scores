@@ -6,7 +6,7 @@
 <title>{{ metaTitle }}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,600;0,700;1,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,600;0,700;1,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Music&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/site.css">
 </head>
 <body style="--accent: var(--{{ accent }})">
@@ -176,6 +176,23 @@
                 <span><span class="i18n-ru">{{ work.data.forces_ru }}</span><span class="i18n-en">{{ work.data.forces_en }}</span></span><span>{{ work.data.duration }}</span>
                 <span class="i18n-ru">{{ work.data.difficulty_ru }}</span><span class="i18n-en">{{ work.data.difficulty_en }}</span><span class="version-badge">{{ work.data.version }}</span>
               </div>
+              {% if work.data.range_low and work.data.range_high %}
+              {% voiceRangeSVG work.data.range_low, work.data.range_high %}
+              {% endif %}
+              {% if work.data.key_variants and work.data.key_variants.length %}
+              <div class="key-variants">
+                {% for variant in work.data.key_variants %}
+                <div class="key-variant">
+                  <span class="key-variant__label">{{ variant.key_label }}</span>
+                  {% if variant.voice_range_low and variant.voice_range_high %}
+                  {% voiceRangeSVG variant.voice_range_low, variant.voice_range_high %}
+                  {% endif %}
+                  {% if variant.pdf_url %}<a href="{{ variant.pdf_url }}">PDF</a>{% endif %}
+                  {% if variant.audio_url %}<a href="{{ variant.audio_url }}">аудио</a>{% endif %}
+                </div>
+                {% endfor %}
+              </div>
+              {% endif %}
               <audio class="preview" controls data-audio="{{ work.data.audio_url }}"></audio>
             </div>
             <div class="work-actions">

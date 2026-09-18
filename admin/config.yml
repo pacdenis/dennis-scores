@@ -52,6 +52,28 @@ collections:
         multiple: true
         options: ["concertnaya", "prazdnichnaya", "svadebnaya", "detskaya", "liricheskaya"]
         hint: "concertnaya=Концертная, prazdnichnaya=Праздничная, svadebnaya=Свадебная, detskaya=Детская, liricheskaya=Лирическая"
+      - label: "Нижняя нота диапазона"
+        name: "range_low"
+        widget: "string"
+        required: false
+        hint: "натуральная нота + октава, например: A3"
+      - label: "Верхняя нота диапазона"
+        name: "range_high"
+        widget: "string"
+        required: false
+        hint: "например: G5"
+      - label: "Варианты в других тональностях"
+        name: "key_variants"
+        widget: "list"
+        required: false
+        label_singular: "Вариант"
+        summary: "{{key_label}}"
+        fields:
+          - { label: "Тональность", name: "key_label", widget: "string" }
+          - { label: "Нижняя нота", name: "voice_range_low", widget: "string", required: false }
+          - { label: "Верхняя нота", name: "voice_range_high", widget: "string", required: false }
+          - { label: "PDF этой версии", name: "pdf_url", widget: "file", media_library: { config: { multiple: false } }, required: false }
+          - { label: "Аудио этой версии", name: "audio_url", widget: "file", media_library: { config: { multiple: false } }, required: false }
       - { label: "Версия партитуры", name: "version", widget: "string", default: "v1.0" }
       - { label: "Дата создания/публикации", name: "date_created", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false, picker_utc: true, hint: "Реальная дата, когда произведение было написано или впервые опубликовано — по ней автоматически сортируется каталог" }
       - label: "Статус"
@@ -112,6 +134,28 @@ collections:
         multiple: true
         options: ["rozhdestvo", "pasha", "svadebnaya", "uteshenie", "hvala", "molitvennaya"]
         hint: "rozhdestvo=Рождество, pasha=Пасха, svadebnaya=Свадебная, uteshenie=Утешение, hvala=Хвала и благодарение, molitvennaya=Молитвенные"
+      - label: "Нижняя нота диапазона"
+        name: "range_low"
+        widget: "string"
+        required: false
+        hint: "натуральная нота + октава, например: A3"
+      - label: "Верхняя нота диапазона"
+        name: "range_high"
+        widget: "string"
+        required: false
+        hint: "например: G5"
+      - label: "Варианты в других тональностях"
+        name: "key_variants"
+        widget: "list"
+        required: false
+        label_singular: "Вариант"
+        summary: "{{key_label}}"
+        fields:
+          - { label: "Тональность", name: "key_label", widget: "string" }
+          - { label: "Нижняя нота", name: "voice_range_low", widget: "string", required: false }
+          - { label: "Верхняя нота", name: "voice_range_high", widget: "string", required: false }
+          - { label: "PDF этой версии", name: "pdf_url", widget: "file", media_library: { config: { multiple: false } }, required: false }
+          - { label: "Аудио этой версии", name: "audio_url", widget: "file", media_library: { config: { multiple: false } }, required: false }
       - { label: "Версия партитуры", name: "version", widget: "string", default: "v1.0" }
       - { label: "Дата создания/публикации", name: "date_created", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false, picker_utc: true, hint: "Реальная дата, когда произведение было написано или впервые опубликовано — по ней автоматически сортируется каталог" }
       - label: "Статус"

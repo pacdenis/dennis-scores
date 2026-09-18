@@ -179,6 +179,18 @@
     margin-top:5px; display:flex; gap:14px; flex-wrap:wrap;
     font-family:'IBM Plex Mono',monospace; font-size:.76rem; color:var(--text-muted);
   }
+  .voice-range .vr-line,
+  .voice-range .vr-ledger{ stroke: var(--ink); stroke-width: 0.75; }
+  .voice-range .vr-stem{ stroke: var(--ink); stroke-width: 1.5; }
+  .voice-range .vr-note{ fill: var(--paper); stroke: var(--ink); stroke-width: 1.5; }
+  .voice-range .vr-label{ font-size: 12px; fill: var(--ink); }
+  .voice-range .vr-range{ font-size: 14px; fill: var(--ink); }
+  .voice-range .vr-clef{ font-size: 58px; font-family: 'Noto Music', serif; fill: var(--ink); }
+  .key-variants{ margin-top:8px; display:flex; flex-direction:column; gap:10px; }
+  .key-variant{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .key-variant__label{
+    font-family:'IBM Plex Sans',sans-serif; font-size:.82rem; color:var(--text-muted); font-style:italic;
+  }
   .work-actions{display:flex; gap:8px; align-items:center; justify-self:end;}
   .icon-btn{
     font-family:'IBM Plex Sans',sans-serif; font-size:.82rem;
