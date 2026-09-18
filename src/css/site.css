@@ -191,7 +191,7 @@
   .key-variant__label{
     font-family:'IBM Plex Sans',sans-serif; font-size:.82rem; color:var(--text-muted); font-style:italic;
   }
-  .work-actions{display:flex; gap:8px; align-items:center; justify-self:end;}
+  .work-actions{display:flex; gap:8px; align-items:center; justify-self:end; flex-wrap:wrap;}
   .icon-btn{
     font-family:'IBM Plex Sans',sans-serif; font-size:.82rem;
     padding:8px 14px; border-radius:2px; border:1px solid var(--rule);

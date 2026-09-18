@@ -201,6 +201,11 @@
               {% else %}
               <button class="icon-btn play" data-audio="{{ work.data.audio_url }}">▶ <span class="i18n-ru">Прослушать</span><span class="i18n-en">Preview</span></button>
               {% endif %}
+              {% if work.data.demos and work.data.demos.length %}
+              {% for demo in work.data.demos %}
+              <a class="icon-btn play" href="{{ demo.url }}" target="_blank" rel="noopener">▶ {{ demo.label or "Демо" }}</a>
+              {% endfor %}
+              {% endif %}
               <a class="icon-btn pdf" href="{{ work.data.pdf_url or '#' }}" data-pdf="{{ work.data.pdf_url }}">PDF</a>
               {% if work.data.access_type == "free" %}
               <a class="icon-btn buy" href="{{ work.data.buy_url or work.data.performance_url or '#' }}" target="_blank" rel="noopener"><span class="i18n-ru">Скачать бесплатно</span><span class="i18n-en">Free download</span></a>
