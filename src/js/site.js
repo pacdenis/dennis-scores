@@ -117,7 +117,7 @@
   // --- audio preview toggle ---
   document.querySelectorAll('.icon-btn.play').forEach(function(btn){
     var src = btn.getAttribute('data-audio');
-    if(!src){ btn.disabled = true; btn.title = 'Пример — добавьте mp3 в data-audio'; return; }
+    if(!src){ btn.disabled = true; return; }
     btn.addEventListener('click', function(){
       var audio = btn.closest('li').querySelector('audio.preview');
       audio.src = src;
@@ -132,8 +132,23 @@
     if(!pdf){
       a.addEventListener('click', function(e){ e.preventDefault(); });
       a.style.opacity = '.45';
-      a.title = 'Пример — добавьте ссылку в data-pdf';
     } else {
       a.href = pdf;
     }
+  });
+
+  // --- "Request score" buttons: prefill the contact form with the work title ---
+  document.querySelectorAll('a.request').forEach(function(a){
+    a.addEventListener('click', function(){
+      var en = document.body.classList.contains('lang-en');
+      var title = a.getAttribute(en ? 'data-work-en' : 'data-work-ru') || a.getAttribute('data-work-ru') || '';
+      var ta = document.querySelector('#contactForm textarea[name="message"]');
+      var hidden = document.getElementById('workField');
+      if(hidden) hidden.value = a.getAttribute('data-work-ru') || title;
+      if(ta && !ta.value){
+        ta.value = en
+          ? 'Hello! I am interested in the score: "' + title + '".'
+          : 'Здравствуйте! Интересуют ноты: «' + title + '».';
+      }
+    });
   });

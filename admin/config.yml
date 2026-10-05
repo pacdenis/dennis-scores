@@ -20,14 +20,21 @@ collections:
       - { label: "Название (RU)", name: "title_ru", widget: "string" }
       - { label: "Title (EN)", name: "title_en", widget: "string" }
       - { label: "Автор музыки", name: "composer", widget: "string", required: false }
+      - { label: "Автор музыки (EN)", name: "composer_en", widget: "string", required: false, hint: "Как писать в английской версии сайта. Если пусто — покажется русский вариант" }
       - { label: "Автор слов", name: "lyricist", widget: "string", required: false }
+      - { label: "Автор слов (EN)", name: "lyricist_en", widget: "string", required: false }
       - { label: "Аранжировка", name: "arranger", widget: "string", required: false }
+      - { label: "Аранжировка (EN)", name: "arranger_en", widget: "string", required: false }
       - { label: "Редакция", name: "editor", widget: "string", required: false }
       - { label: "Гармонизация", name: "harmonizer", widget: "string", required: false }
       - { label: "Перевод (на другой язык)", name: "translator", widget: "string", required: false }
-      - { label: "Состав (RU)", name: "forces_ru", widget: "string", required: false }
+      - { label: "Примечание (RU)", name: "note_ru", widget: "string", required: false, hint: "Например: На базе мелодий … / По заказу …" }
+      - { label: "Note (EN)", name: "note_en", widget: "string", required: false }
+      - { label: "Состав (RU)", name: "forces_ru", widget: "string" }
       - { label: "Forces (EN)", name: "forces_en", widget: "string" }
       - { label: "Хронометраж (например 3:40)", name: "duration", widget: "string" }
+      - { label: "Инструментовка (состав оркестра)", name: "instrumentation", widget: "text", required: false, hint: "Например: Picc./2 Fl./Ob./2 Cl./… Показывается на сайте по клику «Инструментовка»" }
+      - { label: "Текст песни", name: "lyrics", widget: "text", required: false, hint: "Вставь текст из описания видео. Переносы строк сохраняются. На сайте показывается по клику «Текст песни»" }
       - label: "Сложность (RU)"
         name: "difficulty_ru"
         widget: "select"
@@ -52,52 +59,13 @@ collections:
         multiple: true
         options: ["concertnaya", "prazdnichnaya", "svadebnaya", "detskaya", "liricheskaya"]
         hint: "concertnaya=Концертная, prazdnichnaya=Праздничная, svadebnaya=Свадебная, detskaya=Детская, liricheskaya=Лирическая"
-      - label: "Нижняя нота диапазона"
-        name: "range_low"
-        widget: "string"
-        required: false
-        hint: "натуральная нота + октава, например: A3"
-      - label: "Верхняя нота диапазона"
-        name: "range_high"
-        widget: "string"
-        required: false
-        hint: "например: G5"
-      - label: "Варианты в других тональностях"
-        name: "key_variants"
-        widget: "list"
-        required: false
-        label_singular: "Вариант"
-        summary: "{{key_label}}"
-        fields:
-          - { label: "Тональность", name: "key_label", widget: "string" }
-          - { label: "Нижняя нота", name: "voice_range_low", widget: "string", required: false }
-          - { label: "Верхняя нота", name: "voice_range_high", widget: "string", required: false }
-          - { label: "PDF этой версии", name: "pdf_url", widget: "file", media_library: { config: { multiple: false } }, required: false }
-          - { label: "Аудио этой версии", name: "audio_url", widget: "file", media_library: { config: { multiple: false } }, required: false }
       - { label: "Версия партитуры", name: "version", widget: "string", default: "v1.0" }
       - { label: "Дата создания/публикации", name: "date_created", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false, picker_utc: true, hint: "Реальная дата, когда произведение было написано или впервые опубликовано — по ней автоматически сортируется каталог" }
-      - label: "Статус"
-        name: "access_type"
-        widget: "select"
-        default: "for_sale"
-        options:
-          - { label: "Продажа", value: "for_sale" }
-          - { label: "Свободный доступ", value: "free" }
+      - { label: "Статус", name: "access_type", widget: "select", default: "for_sale", options: [{ label: "Продажа", value: "for_sale" }, { label: "По запросу", value: "request" }, { label: "Свободный доступ", value: "free" }] }
       - { label: "Ссылка на готовое исполнение (YouTube и т.п.)", name: "performance_url", widget: "string", required: false, hint: "Если есть — на сайте появится кнопка «Смотреть исполнение» вместо встроенного плеера" }
-      - label: "Демо-записи (ссылки)"
-        name: "demos"
-        widget: "list"
-        required: false
-        label_singular: "Демо"
-        summary: "{{label}}"
-        fields:
-          - { label: "Подпись", name: "label", widget: "string", hint: "например: Демо (YouTube)" }
-          - { label: "Ссылка", name: "url", widget: "string" }
       - { label: "Аудио-превью (mp3, свой отрывок)", name: "audio_url", widget: "file", media_library: { config: { multiple: false } }, required: false }
       - { label: "PDF-превью (первая страница)", name: "pdf_url", widget: "file", media_library: { config: { multiple: false } }, required: false }
       - { label: "Ссылка на покупку/доступ", name: "buy_url", widget: "string", required: false, hint: "Для «Продажи» — ссылка на Gumroad/Payhip. Для «Свободного доступа» — куда вести за бесплатной копией (или оставь пустым, если доступ только через ссылку на исполнение выше)" }
-      - { label: "Текст произведения (RU)", name: "text_ru", widget: "text", required: false, hint: "Полный текст/слова произведения — на сайте будет скрыт под разворачивающимся блоком «Показать текст»" }
-      - { label: "Text (EN)", name: "text_en", widget: "text", required: false }
 
   - name: "sacred_works"
     label: "Духовный каталог"
@@ -110,14 +78,21 @@ collections:
       - { label: "Название (RU)", name: "title_ru", widget: "string" }
       - { label: "Title (EN)", name: "title_en", widget: "string" }
       - { label: "Автор музыки", name: "composer", widget: "string", required: false }
+      - { label: "Автор музыки (EN)", name: "composer_en", widget: "string", required: false, hint: "Как писать в английской версии сайта. Если пусто — покажется русский вариант" }
       - { label: "Автор слов", name: "lyricist", widget: "string", required: false }
+      - { label: "Автор слов (EN)", name: "lyricist_en", widget: "string", required: false }
       - { label: "Аранжировка", name: "arranger", widget: "string", required: false }
+      - { label: "Аранжировка (EN)", name: "arranger_en", widget: "string", required: false }
       - { label: "Редакция", name: "editor", widget: "string", required: false }
       - { label: "Гармонизация", name: "harmonizer", widget: "string", required: false }
       - { label: "Перевод (на другой язык)", name: "translator", widget: "string", required: false }
-      - { label: "Состав (RU)", name: "forces_ru", widget: "string", required: false }
+      - { label: "Примечание (RU)", name: "note_ru", widget: "string", required: false, hint: "Например: На базе мелодий … / По заказу …" }
+      - { label: "Note (EN)", name: "note_en", widget: "string", required: false }
+      - { label: "Состав (RU)", name: "forces_ru", widget: "string" }
       - { label: "Forces (EN)", name: "forces_en", widget: "string" }
       - { label: "Хронометраж (например 3:40)", name: "duration", widget: "string" }
+      - { label: "Инструментовка (состав оркестра)", name: "instrumentation", widget: "text", required: false, hint: "Например: Picc./2 Fl./Ob./2 Cl./… Показывается на сайте по клику «Инструментовка»" }
+      - { label: "Текст песни", name: "lyrics", widget: "text", required: false, hint: "Вставь текст из описания видео. Переносы строк сохраняются. На сайте показывается по клику «Текст песни»" }
       - label: "Сложность (RU)"
         name: "difficulty_ru"
         widget: "select"
@@ -136,6 +111,7 @@ collections:
           - { label: "Детский хор", value: "detskiy_hor" }
           - { label: "Хор + ф-но/орган", value: "piano" }
           - { label: "Хор + оркестр", value: "orchestra" }
+          - { label: "Солист с оркестром", value: "solo_orchestra" }
           - { label: "Оркестровые", value: "orchestral" }
           - { label: "Вокал соло", value: "solo" }
           - { label: "Ансамбль", value: "ensemble" }
@@ -143,54 +119,15 @@ collections:
         name: "tags"
         widget: "select"
         multiple: true
-        options: ["rozhdestvo", "pasha", "svadebnaya", "uteshenie", "hvala", "molitvennaya"]
-        hint: "rozhdestvo=Рождество, pasha=Пасха, svadebnaya=Свадебная, uteshenie=Утешение, hvala=Хвала и благодарение, molitvennaya=Молитвенные"
-      - label: "Нижняя нота диапазона"
-        name: "range_low"
-        widget: "string"
-        required: false
-        hint: "натуральная нота + октава, например: A3"
-      - label: "Верхняя нота диапазона"
-        name: "range_high"
-        widget: "string"
-        required: false
-        hint: "например: G5"
-      - label: "Варианты в других тональностях"
-        name: "key_variants"
-        widget: "list"
-        required: false
-        label_singular: "Вариант"
-        summary: "{{key_label}}"
-        fields:
-          - { label: "Тональность", name: "key_label", widget: "string" }
-          - { label: "Нижняя нота", name: "voice_range_low", widget: "string", required: false }
-          - { label: "Верхняя нота", name: "voice_range_high", widget: "string", required: false }
-          - { label: "PDF этой версии", name: "pdf_url", widget: "file", media_library: { config: { multiple: false } }, required: false }
-          - { label: "Аудио этой версии", name: "audio_url", widget: "file", media_library: { config: { multiple: false } }, required: false }
+        options: ["rozhdestvo", "pasha", "svadebnaya", "uteshenie", "hvala", "molitvennaya", "zhatva", "strasti"]
+        hint: "rozhdestvo=Рождество, pasha=Пасха, svadebnaya=Свадебная, uteshenie=Утешение, hvala=Хвала и благодарение, molitvennaya=Молитвенные, zhatva=Жатва, strasti=Страдания Христа"
       - { label: "Версия партитуры", name: "version", widget: "string", default: "v1.0" }
       - { label: "Дата создания/публикации", name: "date_created", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false, picker_utc: true, hint: "Реальная дата, когда произведение было написано или впервые опубликовано — по ней автоматически сортируется каталог" }
-      - label: "Статус"
-        name: "access_type"
-        widget: "select"
-        default: "for_sale"
-        options:
-          - { label: "Продажа", value: "for_sale" }
-          - { label: "Свободный доступ", value: "free" }
+      - { label: "Статус", name: "access_type", widget: "select", default: "for_sale", options: [{ label: "Продажа", value: "for_sale" }, { label: "По запросу", value: "request" }, { label: "Свободный доступ", value: "free" }] }
       - { label: "Ссылка на готовое исполнение (YouTube и т.п.)", name: "performance_url", widget: "string", required: false, hint: "Если есть — на сайте появится кнопка «Смотреть исполнение» вместо встроенного плеера" }
-      - label: "Демо-записи (ссылки)"
-        name: "demos"
-        widget: "list"
-        required: false
-        label_singular: "Демо"
-        summary: "{{label}}"
-        fields:
-          - { label: "Подпись", name: "label", widget: "string", hint: "например: Демо (YouTube)" }
-          - { label: "Ссылка", name: "url", widget: "string" }
       - { label: "Аудио-превью (mp3, свой отрывок)", name: "audio_url", widget: "file", media_library: { config: { multiple: false } }, required: false }
       - { label: "PDF-превью (первая страница)", name: "pdf_url", widget: "file", media_library: { config: { multiple: false } }, required: false }
       - { label: "Ссылка на покупку/доступ", name: "buy_url", widget: "string", required: false, hint: "Для «Продажи» — ссылка на Gumroad/Payhip. Для «Свободного доступа» — куда вести за бесплатной копией (или оставь пустым, если доступ только через ссылку на исполнение выше)" }
-      - { label: "Текст произведения (RU)", name: "text_ru", widget: "text", required: false, hint: "Полный текст/слова произведения — на сайте будет скрыт под разворачивающимся блоком «Показать текст»" }
-      - { label: "Text (EN)", name: "text_en", widget: "text", required: false }
 
   - name: "journal"
     label: "Мастерская (новости)"

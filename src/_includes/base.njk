@@ -6,7 +6,7 @@
 <title>{{ metaTitle }}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,600;0,700;1,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Music&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,600;0,700;1,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/site.css">
 </head>
 <body style="--accent: var(--{{ accent }})">
@@ -96,6 +96,11 @@
           <span class="i18n-ru">Коротко о том, над чем сейчас работаю и что недавно закончил — с демо, где это уместно.</span>
           <span class="i18n-en">Short notes on what I'm currently working on and what's recently finished — with a demo where relevant.</span>
         </p>
+        {% if telegramUrl %}
+        <p class="tg-link">
+          <a href="{{ telegramUrl }}" target="_blank" rel="noopener"><span class="i18n-ru">Новые демо-записи — в Telegram-канале →</span><span class="i18n-en">New demo recordings — on the Telegram channel →</span></a>
+        </p>
+        {% endif %}
       </div>
 
       <ul class="journal-list">
@@ -162,59 +167,49 @@
             <span class="work-no">No. {{ loop.index | pad3 }}</span>
             <div>
               <div class="work-title"><span class="i18n-ru">{{ work.data.title_ru }}</span><span class="i18n-en">{{ work.data.title_en }}</span></div>
-              {% if work.data.composer or work.data.lyricist or work.data.arranger or work.data.editor or work.data.harmonizer or work.data.translator %}
+              {% if work.data.composer or work.data.composer_en or work.data.lyricist or work.data.lyricist_en or work.data.arranger or work.data.arranger_en or work.data.editor or work.data.harmonizer or work.data.translator or work.data.note_ru or work.data.note_en %}
               <div class="work-credits">
-                {% if work.data.composer %}<span><span class="i18n-ru">Музыка:</span><span class="i18n-en">Music:</span> {{ work.data.composer }}</span>{% endif %}
-                {% if work.data.lyricist %}<span><span class="i18n-ru">Слова:</span><span class="i18n-en">Words:</span> {{ work.data.lyricist }}</span>{% endif %}
-                {% if work.data.arranger %}<span><span class="i18n-ru">Аранжировка:</span><span class="i18n-en">Arranged by:</span> {{ work.data.arranger }}</span>{% endif %}
+                {% if work.data.composer or work.data.composer_en %}<span><span class="i18n-ru">Музыка:</span><span class="i18n-en">Music:</span> <span class="i18n-ru">{{ work.data.composer or work.data.composer_en }}</span><span class="i18n-en">{{ work.data.composer_en or work.data.composer }}</span></span>{% endif %}
+                {% if work.data.lyricist or work.data.lyricist_en %}<span><span class="i18n-ru">Слова:</span><span class="i18n-en">Words:</span> <span class="i18n-ru">{{ work.data.lyricist or work.data.lyricist_en }}</span><span class="i18n-en">{{ work.data.lyricist_en or work.data.lyricist }}</span></span>{% endif %}
+                {% if work.data.arranger or work.data.arranger_en %}<span><span class="i18n-ru">Аранжировка:</span><span class="i18n-en">Arranged by:</span> <span class="i18n-ru">{{ work.data.arranger or work.data.arranger_en }}</span><span class="i18n-en">{{ work.data.arranger_en or work.data.arranger }}</span></span>{% endif %}
                 {% if work.data.editor %}<span><span class="i18n-ru">Редакция:</span><span class="i18n-en">Edited by:</span> {{ work.data.editor }}</span>{% endif %}
                 {% if work.data.harmonizer %}<span><span class="i18n-ru">Гармонизация:</span><span class="i18n-en">Harmonized by:</span> {{ work.data.harmonizer }}</span>{% endif %}
                 {% if work.data.translator %}<span><span class="i18n-ru">Перевод:</span><span class="i18n-en">Translated by:</span> {{ work.data.translator }}</span>{% endif %}
+                {% if work.data.note_ru or work.data.note_en %}<span><span class="i18n-ru">{{ work.data.note_ru or work.data.note_en }}</span><span class="i18n-en">{{ work.data.note_en or work.data.note_ru }}</span></span>{% endif %}
               </div>
               {% endif %}
               <div class="work-meta">
                 <span><span class="i18n-ru">{{ work.data.forces_ru }}</span><span class="i18n-en">{{ work.data.forces_en }}</span></span><span>{{ work.data.duration }}</span>
                 <span class="i18n-ru">{{ work.data.difficulty_ru }}</span><span class="i18n-en">{{ work.data.difficulty_en }}</span><span class="version-badge">{{ work.data.version }}</span>
               </div>
-              {% if work.data.range_low and work.data.range_high %}
-              {% voiceRangeSVG work.data.range_low, work.data.range_high %}
+              {% if work.data.instrumentation %}
+              <details class="work-instr">
+                <summary><span class="i18n-ru">Инструментовка</span><span class="i18n-en">Instrumentation</span></summary>
+                <p>{{ work.data.instrumentation }}</p>
+              </details>
               {% endif %}
-              {% if work.data.key_variants and work.data.key_variants.length %}
-              <div class="key-variants">
-                {% for variant in work.data.key_variants %}
-                <div class="key-variant">
-                  <span class="key-variant__label">{{ variant.key_label }}</span>
-                  {% if variant.voice_range_low and variant.voice_range_high %}
-                  {% voiceRangeSVG variant.voice_range_low, variant.voice_range_high %}
-                  {% endif %}
-                  {% if variant.pdf_url %}<a href="{{ variant.pdf_url }}">PDF</a>{% endif %}
-                  {% if variant.audio_url %}<a href="{{ variant.audio_url }}">аудио</a>{% endif %}
-                </div>
-                {% endfor %}
-              </div>
-              {% endif %}
-              {% if work.data.text_ru or work.data.text_en %}
-              <details class="work-text">
-                <summary><span class="i18n-ru">Показать текст</span><span class="i18n-en">Show text</span></summary>
-                {% if work.data.text_ru %}<p class="i18n-ru">{{ work.data.text_ru }}</p>{% endif %}
-                {% if work.data.text_en %}<p class="i18n-en">{{ work.data.text_en }}</p>{% endif %}
+              {% if work.data.lyrics %}
+              <details class="work-instr work-lyrics">
+                <summary><span class="i18n-ru">Текст песни</span><span class="i18n-en">Lyrics</span></summary>
+                <p>{{ work.data.lyrics }}</p>
               </details>
               {% endif %}
               <audio class="preview" controls data-audio="{{ work.data.audio_url }}"></audio>
             </div>
             <div class="work-actions">
               {% if work.data.performance_url %}
-              <a class="icon-btn play" href="{{ work.data.performance_url }}" target="_blank" rel="noopener">▶ <span class="i18n-ru">Смотреть исполнение</span><span class="i18n-en">Watch performance</span></a>
-              {% else %}
+              <a class="icon-btn watch" href="{{ work.data.performance_url }}" target="_blank" rel="noopener">▶ <span class="i18n-ru">Смотреть исполнение</span><span class="i18n-en">Watch performance</span></a>
+              {% endif %}
+              {% if work.data.audio_url or not work.data.performance_url %}
               <button class="icon-btn play" data-audio="{{ work.data.audio_url }}">▶ <span class="i18n-ru">Прослушать</span><span class="i18n-en">Preview</span></button>
               {% endif %}
-              {% if work.data.demos and work.data.demos.length %}
-              {% for demo in work.data.demos %}
-              <a class="icon-btn play" href="{{ demo.url }}" target="_blank" rel="noopener">▶ {{ demo.label or "Демо" }}</a>
-              {% endfor %}
+              {% if work.data.pdf_url %}
+              <a class="icon-btn pdf" href="{{ work.data.pdf_url }}" data-pdf="{{ work.data.pdf_url }}" target="_blank" rel="noopener">PDF</a>
               {% endif %}
-              <a class="icon-btn pdf" href="{{ work.data.pdf_url or '#' }}" data-pdf="{{ work.data.pdf_url }}">PDF</a>
-              {% if work.data.access_type == "free" %}
+              {% set hasBuy = work.data.buy_url and work.data.buy_url != "#" %}
+              {% if work.data.access_type == "request" or (work.data.access_type != "free" and not hasBuy) %}
+              <a class="icon-btn buy request" href="#contact" data-work-ru="{{ work.data.title_ru }}" data-work-en="{{ work.data.title_en }}"><span class="i18n-ru">Запросить ноты</span><span class="i18n-en">Request score</span></a>
+              {% elif work.data.access_type == "free" %}
               <a class="icon-btn buy" href="{{ work.data.buy_url or work.data.performance_url or '#' }}" target="_blank" rel="noopener"><span class="i18n-ru">Скачать бесплатно</span><span class="i18n-en">Free download</span></a>
               {% else %}
               <a class="icon-btn buy" href="{{ work.data.buy_url or '#' }}"><span class="i18n-ru">Купить</span><span class="i18n-en">Buy</span></a>
@@ -274,6 +269,7 @@
         </p>
         <form class="contact-form" id="contactForm" action="https://formspree.io/f/xaeyaoon" method="POST">
           <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off">
+          <input type="hidden" name="work" id="workField" value="">
           <input type="text" name="name" data-ph-ru="Ваше имя" data-ph-en="Your name" required>
           <input type="email" name="email" data-ph-ru="Ваш email" data-ph-en="Your email" required>
           <textarea name="message" data-ph-ru="Расскажите о проекте" data-ph-en="Tell me about your project" required></textarea>
@@ -291,6 +287,11 @@
           <span class="i18n-ru">Форма подключается через Formspree — бесплатный сервис пересылки писем.</span>
           <span class="i18n-en">Powered by Formspree — a free form-to-email relay service.</span>
         </p>
+        {% if telegramUrl %}
+        <p class="contact-note tg-link">
+          <span class="i18n-ru">Новинки и демо-записи:</span><span class="i18n-en">News and demo recordings:</span> <a href="{{ telegramUrl }}" target="_blank" rel="noopener">Telegram</a>
+        </p>
+        {% endif %}
       </div>
     </div>
   </section>
@@ -300,6 +301,7 @@
 <footer>
   <div class="wrap">
     <p>© <span id="year"></span> Денис Пацюк</p>
+    {% if telegramUrl %}<p><a class="tg-foot" href="{{ telegramUrl }}" target="_blank" rel="noopener">Telegram</a></p>{% endif %}
     <p><span class="i18n-ru">Польша</span><span class="i18n-en">Poland</span></p>
   </div>
 </footer>

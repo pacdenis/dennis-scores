@@ -175,23 +175,16 @@
     margin-top:4px; display:flex; gap:12px; flex-wrap:wrap;
     font-family:'IBM Plex Sans',sans-serif; font-size:.82rem; color:var(--text-muted); font-style:italic;
   }
+  .work-instr{margin-top:6px;}
+  .work-instr summary{cursor:pointer; font-family:'IBM Plex Mono',monospace; font-size:.76rem; color:var(--text-muted);}
+  .work-instr summary:hover{color:var(--ink);}
+  .work-instr p{margin:6px 0 0; font-family:'IBM Plex Mono',monospace; font-size:.74rem; line-height:1.55; color:var(--text-muted); max-width:64ch;}
+  .work-lyrics p{font-family:'IBM Plex Sans',sans-serif; font-size:.9rem; line-height:1.6; white-space:pre-line; color:var(--text); max-width:52ch;}
   .work-meta{
     margin-top:5px; display:flex; gap:14px; flex-wrap:wrap;
     font-family:'IBM Plex Mono',monospace; font-size:.76rem; color:var(--text-muted);
   }
-  .voice-range .vr-line,
-  .voice-range .vr-ledger{ stroke: var(--ink); stroke-width: 0.75; }
-  .voice-range .vr-stem{ stroke: var(--ink); stroke-width: 1.5; }
-  .voice-range .vr-note{ fill: var(--paper); stroke: var(--ink); stroke-width: 1.5; }
-  .voice-range .vr-label{ font-size: 12px; fill: var(--ink); }
-  .voice-range .vr-range{ font-size: 14px; fill: var(--ink); }
-  .voice-range .vr-clef{ font-size: 58px; font-family: 'Noto Music', serif; fill: var(--ink); }
-  .key-variants{ margin-top:8px; display:flex; flex-direction:column; gap:10px; }
-  .key-variant{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
-  .key-variant__label{
-    font-family:'IBM Plex Sans',sans-serif; font-size:.82rem; color:var(--text-muted); font-style:italic;
-  }
-  .work-actions{display:flex; gap:8px; align-items:center; justify-self:end; flex-wrap:wrap;}
+  .work-actions{display:flex; gap:8px; align-items:center; justify-self:end;}
   .icon-btn{
     font-family:'IBM Plex Sans',sans-serif; font-size:.82rem;
     padding:8px 14px; border-radius:2px; border:1px solid var(--rule);
@@ -201,14 +194,6 @@
   .icon-btn[disabled]{opacity:.45; cursor:not-allowed;}
   .icon-btn.buy{border-color:var(--ink); background:var(--ink); color:var(--paper);}
   audio.preview{display:none; margin-top:10px; width:100%;}
-  .work-text{
-    margin-top:10px; font-family:'IBM Plex Sans',sans-serif; font-size:.86rem; color:var(--text);
-  }
-  .work-text summary{
-    cursor:pointer; color:var(--text-muted); font-size:.82rem; user-select:none;
-  }
-  .work-text summary:hover{color:var(--ink);}
-  .work-text p{margin-top:8px; white-space:pre-wrap; line-height:1.55;}
   audio.preview.shown{display:block;}
 
   /* --- services --- */
@@ -242,6 +227,10 @@
   .form-message.error{border-color:var(--sacred); color:var(--sacred);}
   .contact-form .hp{position:absolute; left:-9999px; opacity:0; pointer-events:none;}
   .contact-note{margin-top:14px; font-size:.78rem; color:var(--text-muted);}
+  .tg-link{font-size:.9rem;}
+  .tg-link a, a.tg-foot{color:var(--accent, var(--secular)); text-decoration:none; border-bottom:1px solid var(--rule);}
+  .tg-link a:hover, a.tg-foot:hover{border-color:var(--accent, var(--secular));}
+  a.tg-foot{font-size:.8rem;}
   .catalog-note{margin-top:8px !important; font-size:.85rem; color:var(--text-muted);}
   .empty-state{margin-top:24px; padding:20px 0; font-size:.94rem; color:var(--text-muted); border-top:1px solid var(--rule);}
 
